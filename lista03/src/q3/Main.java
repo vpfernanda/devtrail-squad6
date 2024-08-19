@@ -15,6 +15,7 @@ public class Main {
         malePercent = ((float)maleStudents/total)*100;
         System.out.printf("\nPorcentagem de alunos homens: %.2f %%",malePercent);
         System.out.printf("\nPorcentagem de alunas mulheres: %.2f %%",femPercent);
+        scanner.close();
     }
 
 
