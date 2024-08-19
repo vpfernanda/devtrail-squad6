@@ -4,13 +4,15 @@ public class Fatorial {
     int numero;
     long fatorial;
 
-    public void setNumero(int numero) {
-        this.numero = numero;
-    }
     public Fatorial(int numero){
         this.numero = numero;
         fatorial = 1;
     }
+
+    public void setNumero(int numero) {
+        this.numero = numero;
+    }
+
 
     public long getFatorial() {
         return fatorial;
