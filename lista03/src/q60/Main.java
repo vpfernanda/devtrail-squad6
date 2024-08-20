@@ -49,7 +49,8 @@ public class Main {
         for (int i = 0; i < anosACalcular; i++) {
             System.out.printf("| %-" + larguraAno + "d |", anoInicial + i);
             for (int j = 0; j < 12; j++) {
-                calculo.aplicaCorrecao();
+                if(i!=0 || j!=0)
+                    calculo.aplicaCorrecao();
                 System.out.printf(" %-" + larguraValor + ".2f |", calculo.getValorAtualizado());
             }
             System.out.println();
