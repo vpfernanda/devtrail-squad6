@@ -15,5 +15,7 @@ public class CalculadorIdade {
         int idade = anoAtual - anoNascimento;
 
         System.out.println("Você faz " + idade + " anos este ano.");
+
+        scanner.close();
     }
 }

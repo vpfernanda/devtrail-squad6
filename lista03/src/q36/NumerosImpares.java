@@ -18,6 +18,8 @@ public class NumerosImpares {
                 System.out.println(i);
             }
         }
+
+        scanner.close();
     }
 }
 

@@ -20,6 +20,8 @@ public class CalculadorDivida {
         double valorFinal = valorInicial * (1 + (jurosMensais * meses));
 
         System.out.println("O valor final da dívida é: R$ " + valorFinal);
+
+        scanner.close();
     }
 }
 
