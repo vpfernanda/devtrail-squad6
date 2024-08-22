@@ -27,6 +27,8 @@ public class ValorEmprestimo {
         } else {
             System.out.println("Empréstimo negado.");
         }
+
+        scanner.close();
     }
 }
 

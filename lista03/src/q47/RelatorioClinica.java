@@ -40,6 +40,8 @@ public class RelatorioClinica {
 
             pacientes.add(new Paciente(nome, sexo, peso, idade, altura));
         }
+
+        scanner.close();
         return pacientes;
     }
 

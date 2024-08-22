@@ -2,8 +2,6 @@ package q28;
 
 import java.util.Scanner;
 
-import java.util.Scanner;
-
 public class OrdenarNumeros {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
@@ -41,6 +39,8 @@ public class OrdenarNumeros {
         }
 
         System.out.println("Números em ordem crescente: " + numeros[0] + ", " + numeros[1] + ", " + numeros[2]);
+
+        scanner.close();
     }
 }
 
