@@ -12,92 +12,56 @@ public class LivrariaVirtual {
     private int numEletronicos;
     private int numVendas;
 
-
-    LivrariaVirtual() {
+    public LivrariaVirtual() {
+        impressos = new Impresso[MAX_IMPRESSOS];
+        eletronicos = new Eletronico[MAX_ELETRONICOS];
+        vendas = new Venda[MAX_VENDAS];
         numImpressos = 0;
         numEletronicos = 0;
         numVendas = 0;
-        impressos = new Impressos[MAX_IMPRESSOS];
-        eletronicos = new Eletronicos[MAX_ELETRONICOS];
-        vendas = new Vendas[MAX_VENDAS];
     }
 
     public void cadastrarLivro() {
         Scanner scanner = new Scanner(System.in);
-        String op;
-        String[] entradas;
         System.out.println("|----------CADASTRAR LIVRO----------|");
-        System.out.println("Qual tipo de livro será cadastrado? Digite 1 para Impresso, 2 para " +
-                "Eletrônico, 3 para Ambos: ");
-        op = scanner.nextLine();
+        System.out.println("Qual tipo de livro será cadastrado? \nDigite 1 para Impresso, 2 para Eletrônico, 3 para Ambos: ");
+        String tipoLivro = scanner.nextLine();
 
-        switch (op) {
-            case "1": { // Impresso
-                if(numImpressos<MAX_IMPRESSOS){
-                    entradas = getInfoLivro();
-                    float frete = inputFrete();
-                    System.out.println("Entre a quantidade do livro em estoque: ");
-                    int estoque = scanner.nextInt();
-                    Impresso livroImpresso = new Impresso(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]),
-                            frete, estoque);
-                    impressos[numImpressos] = livroImpresso;
-                    numImpressos++;
-                }
-                else
-                    System.out.println("Quantidade máxima de livros impressos no sistema atingida.");
-                break;
-            }
-
-            case "2": { // Eletronico
-                if(numEletronicos<MAX_ELETRONICOS){
-                    entradas = getInfoLivro();
-                    System.out.println("Entre o tamanho do livro eletrônico: ");
-                    int tamanho = scanner.nextInt();
-                    Eletronico livroEletronico = new Eletronico(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]),
-                            tamanho);
-                    eletronicos[numEletronicos] = livroEletronico;
-                    numEletronicos++;
-                }
-                else
-                    System.out.println("Quantidade máxima de livros eletrônicos no sistema atingida.");
-                break;
-            }
-
-            case "3": { // Ambos
-                if(numEletronicos<MAX_ELETRONICOS && numImpressos<MAX_IMPRESSOS){
-                    entradas = getInfoLivro();
-                    float frete = inputFrete();
-                    System.out.println("Entre a quantidade do livro impresso em estoque: ");
-                    int estoque = scanner.nextInt();
-                    System.out.println("Entre o tamanho do livro eletrônico: ");
-                    int tamanho = scanner.nextInt();
-                    Impresso livroImpresso = new Impresso(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]),
-                            frete, estoque);
-                    impressos[numImpressos] = livroImpresso;
-                    Eletronico livroEletronico = new Eletronico(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]),
-                            tamanho);
-                    eletronicos[numEletronicos] = livroEletronico;
-                    numImpressos++;
-                    numEletronicos++;
-                }
-                else
-                    System.out.println("Quantidade máxima de livros impressos e/ou eletrônicos no sistema atingida.");
-                break;
-            }
-
-            default:
-                System.out.println("Digite uma opção válida.");
-                cadastrarLivro();
-                break;
+        if (tipoLivro.equals("1") || tipoLivro.equals("3")) {
+            cadastrarLivroImpresso(scanner);
         }
-        scanner.close();
+        if (tipoLivro.equals("2") || tipoLivro.equals("3")) {
+            cadastrarLivroEletronico(scanner);
+        } else {
+            System.out.println("Opção inválida.");
+        }
     }
 
+    private void cadastrarLivroImpresso(Scanner scanner) {
+        if (numImpressos < MAX_IMPRESSOS) {
+            String[] entradas = inputInfoLivro(scanner);
+            float frete = inputFrete(scanner);
+            int estoque = inputQuantidade(scanner, "Entre a quantidade do livro em estoque: ");
 
-    public String[] getInfoLivro() {
+            impressos[numImpressos++] = new Impresso(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]), frete, estoque);
+        } else {
+            System.out.println("Quantidade máxima de livros impressos foi atingida.");
+        }
+    }
+
+    private void cadastrarLivroEletronico(Scanner scanner) {
+        if (numEletronicos < MAX_ELETRONICOS) {
+            String[] entradas = inputInfoLivro(scanner);
+            int tamanho = inputQuantidade(scanner, "Entre o tamanho do livro eletrônico: ");
+
+            eletronicos[numEletronicos++] = new Eletronico(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]), tamanho);
+        } else {
+            System.out.println("Quantidade máxima de livros eletrônicos foi atingida.");
+        }
+    }
+
+    private String[] inputInfoLivro(Scanner scanner) {
         String[] entradas = new String[4];
-        Scanner scanner = new Scanner(System.in);
-
         System.out.println("Entre o título do livro: ");
         entradas[0] = scanner.nextLine();
 
@@ -110,7 +74,6 @@ public class LivrariaVirtual {
         while (true) {
             System.out.println("Entre o preço do livro (apenas números, ex: 100.50): ");
             String precoStr = scanner.nextLine();
-
             try {
                 Double.parseDouble(precoStr);
                 entradas[3] = precoStr;
@@ -119,82 +82,106 @@ public class LivrariaVirtual {
                 System.out.println("Valor inválido! Por favor, insira um valor válido para o preço.\n(Exemplo: 100.50)\n");
             }
         }
-        scanner.close();
         return entradas;
     }
 
-    public float inputFrete(){
-        float frete = 0.0f;
-        String freteStr;
-        Scanner scanner = new Scanner(System.in);
+    private float inputFrete(Scanner scanner) {
         while (true) {
             System.out.println("Entre o valor do frete (apenas números, ex: 10.90): ");
-            freteStr = scanner.next();
             try {
-                frete = Float.parseFloat(freteStr);
-                break;
+                return Float.parseFloat(scanner.nextLine());
             } catch (NumberFormatException e) {
                 System.out.println("Valor inválido! Por favor, insira um valor válido para o frete.");
             }
         }
-        scanner.close();
-        return frete;
     }
 
+    private int inputQuantidade(Scanner scanner, String mensagem) {
+        while (true) {
+            System.out.println(mensagem);
+            try {
+                int quantidade = scanner.nextInt();
+                if (quantidade > 0) {
+                    return quantidade;
+                } else {
+                    System.out.println("A quantidade deve ser maior que zero.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Insira uma quantidade válida.");
+                scanner.next(); // Limpa o scanner
+            }
+        }
+    }
 
     public void realizarVenda() {
         Scanner scanner = new Scanner(System.in);
-        int qtdLivros;
-        if(numVendas<MAX_VENDAS){
+        if (numVendas < MAX_VENDAS) {
             System.out.println("|----------REALIZAR VENDA----------|");
             System.out.println("Entre o nome do cliente: ");
             String nomeCliente = scanner.nextLine();
-            while (true) {
-                System.out.println("Entre a quantidade de livros que "+nomeCliente+" deseja comprar: ");
-                try {
-                    qtdLivros = scanner.nextInt();
-                    if(qtdLivros > 0)
-                        break;
-                    else
-                        System.out.println("A quantidade deve ser maior que zero.");
-                }
-                catch (InputMismatchException e) {
-                    System.out.println("Insira uma quantidade válida.\n");
-                }
-            }
-            scanner.next();
-            for(int i=0; i<qtdLivros; i++){
-                System.out.println("Qual o tipo do livro que "+nomeCliente+" deseja comprar (1 - Impresso | 2 - Eletrônico): ");
-                String op = scanner.nextLine();
-                switch (op){
-                    case "1":{
+
+            int qtdLivros = inputQuantidade(scanner, "Entre a quantidade de livros que " + nomeCliente + " deseja comprar: ");
+            Venda venda = new Venda(qtdLivros);
+            venda.setCliente(nomeCliente);
+
+            for (int i = 0; i < qtdLivros; i++) {
+                System.out.println("Escolha do " + (i + 1) + "º livro:");
+                System.out.println("Qual o tipo do livro que " + nomeCliente + " deseja comprar (1 - Impresso | 2 - Eletrônico): ");
+                String tipoLivro = scanner.nextLine();
+
+                switch (tipoLivro) {
+                    case "1":
                         listarLivrosImpressos();
-                        //TODO: receber o código/índice do livro selecionado, e utilizar addLivro do obj Venda.
-                        numVendas++;
+                        adicionarLivro(venda, impressos, "Digite o código do livro desejado: ", scanner);
                         break;
-                    }
-                    case "2":{
+                    case "2":
                         listarLivrosEletronicos();
-                        //TODO: receber o código/índice do livro selecionado, e utilizar addLivro do obj Venda.
-                        numVendas++;
+                        adicionarLivro(venda, eletronicos, "Digite o código do livro desejado: ", scanner);
                         break;
-                    }
                     default:
                         System.out.println("Digite uma opção válida.");
-                        i--; //retorna o índice em uma posição para refazer o laço nesse caso.
+                        i--; // Retorna o índice em uma posição para refazer o laço nesse caso.
                         break;
                 }
             }
+        } else {
+            System.out.println("Quantidade máxima de vendas foi atingida.");
         }
-        scanner.close();
     }
 
+    private void adicionarLivro(Venda venda, Livro[] livros, String mensagem, Scanner scanner) {
+        int livroEscolhido = -1;
+        boolean entradaValida = false;
+
+        while (!entradaValida) {
+            System.out.println(mensagem);
+            try {
+                livroEscolhido = scanner.nextInt();
+                if (livroEscolhido > 0 && livroEscolhido < livros.length) {
+                    venda.addLivro(livros[livroEscolhido]);
+                    numVendas++;
+                    entradaValida = true; //finaliza o while.
+                } else {
+                    System.out.println("Digite uma opção válida.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Entrada inválida. Por favor, digite um número.");
+                scanner.next(); // Limpa o scanner.
+            }
+        }
+    }
+
+
     public void listarLivrosImpressos() {
-        //@TODO
+        for(int i=0; i<impressos.length; i++){
+            System.out.println("|CÓD: "+i+"| -"+impressos[i].toString());
+        }
     }
 
     public void listarLivrosEletronicos() {
-        //@TODO
+        for(int i=0; i<eletronicos.length; i++){
+            System.out.println("|CÓD: "+i+"| -"+eletronicos[i].toString());
+        }
     }
 
     public void listarLivros() {
