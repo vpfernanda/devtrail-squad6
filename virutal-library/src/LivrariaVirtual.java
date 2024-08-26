@@ -67,13 +67,17 @@ public class LivrariaVirtual {
         System.out.println("|----------CADASTRAR LIVRO----------|");
         System.out.println("Qual tipo de livro será cadastrado? \nDigite 1 para Impresso, 2 para Eletrônico, 3 para Ambos: ");
         String tipoLivro = scanner.nextLine();
+        boolean opcaoValida = false;
 
         if (tipoLivro.equals("1") || tipoLivro.equals("3")) {
             cadastrarLivroImpresso(scanner);
+            opcaoValida = true;
         }
         if (tipoLivro.equals("2") || tipoLivro.equals("3")) {
             cadastrarLivroEletronico(scanner);
-        } else {
+            opcaoValida = true;
+        }
+        else if (!opcaoValida) {
             System.out.println("Opção inválida.");
         }
     }
@@ -85,6 +89,7 @@ public class LivrariaVirtual {
             int estoque = inputQuantidade(scanner, "Entre a quantidade do livro em estoque: ");
 
             impressos[numImpressos++] = new Impresso(entradas[0], entradas[1], entradas[2], Float.parseFloat(entradas[3]), frete, estoque);
+            System.out.println("Livro cadastrado com sucesso");
         } else {
             System.out.println("Quantidade máxima de livros impressos foi atingida.");
         }
@@ -96,6 +101,7 @@ public class LivrariaVirtual {
             int tamanho = inputQuantidade(scanner, "Entre o tamanho do livro eletrônico: ");
 
             eletronicos[numEletronicos++] = new Eletronico(entradas[0], entradas[1], entradas[2], Float.parseFloat(entradas[3]), tamanho);
+            System.out.println("Livro cadastrado com sucesso");
         } else {
             System.out.println("Quantidade máxima de livros eletrônicos foi atingida.");
         }
@@ -198,7 +204,8 @@ public class LivrariaVirtual {
             System.out.println(mensagem);
             try {
                 livroEscolhido = scanner.nextInt();
-                if (livroEscolhido > 0 && livroEscolhido < livros.length) {
+                livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
+                if (livroEscolhido > 0 && livroEscolhido <= livros.length) {
                     venda.addLivro(livros[livroEscolhido], livroEscolhido);
                     numVendas++;
                     entradaValida = true; //finaliza o while.
