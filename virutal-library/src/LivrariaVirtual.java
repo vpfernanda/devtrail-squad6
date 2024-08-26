@@ -67,13 +67,17 @@ public class LivrariaVirtual {
         System.out.println("|----------CADASTRAR LIVRO----------|");
         System.out.println("Qual tipo de livro será cadastrado? \nDigite 1 para Impresso, 2 para Eletrônico, 3 para Ambos: ");
         String tipoLivro = scanner.nextLine();
+        boolean opcaoValida = false;
 
         if (tipoLivro.equals("1") || tipoLivro.equals("3")) {
             cadastrarLivroImpresso(scanner);
+            opcaoValida = true;
         }
         if (tipoLivro.equals("2") || tipoLivro.equals("3")) {
             cadastrarLivroEletronico(scanner);
-        } else {
+            opcaoValida = true;
+        }
+        else if (!opcaoValida) {
             System.out.println("Opção inválida.");
         }
     }
@@ -84,7 +88,8 @@ public class LivrariaVirtual {
             float frete = inputFrete(scanner);
             int estoque = inputQuantidade(scanner, "Entre a quantidade do livro em estoque: ");
 
-            impressos[numImpressos++] = new Impresso(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]), frete, estoque);
+            impressos[numImpressos++] = new Impresso(entradas[0], entradas[1], entradas[2], Float.parseFloat(entradas[3]), frete, estoque);
+            System.out.println("Livro cadastrado com sucesso");
         } else {
             System.out.println("Quantidade máxima de livros impressos foi atingida.");
         }
@@ -95,7 +100,8 @@ public class LivrariaVirtual {
             String[] entradas = inputInfoLivro(scanner);
             int tamanho = inputQuantidade(scanner, "Entre o tamanho do livro eletrônico: ");
 
-            eletronicos[numEletronicos++] = new Eletronico(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]), tamanho);
+            eletronicos[numEletronicos++] = new Eletronico(entradas[0], entradas[1], entradas[2], Float.parseFloat(entradas[3]), tamanho);
+            System.out.println("Livro cadastrado com sucesso");
         } else {
             System.out.println("Quantidade máxima de livros eletrônicos foi atingida.");
         }
@@ -116,7 +122,7 @@ public class LivrariaVirtual {
             System.out.println("Entre o preço do livro (apenas números, ex: 100.50): ");
             String precoStr = scanner.nextLine();
             try {
-                Double.parseDouble(precoStr);
+                Float.parseFloat(precoStr);
                 entradas[3] = precoStr;
                 break;
             } catch (NumberFormatException e) {
@@ -198,8 +204,9 @@ public class LivrariaVirtual {
             System.out.println(mensagem);
             try {
                 livroEscolhido = scanner.nextInt();
-                if (livroEscolhido > 0 && livroEscolhido < livros.length) {
-                    venda.addLivro(livros[livroEscolhido]);
+                livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
+                if (livroEscolhido > 0 && livroEscolhido <= livros.length) {
+                    venda.addLivro(livros[livroEscolhido], livroEscolhido);
                     numVendas++;
                     entradaValida = true; //finaliza o while.
                 } else {
@@ -217,7 +224,7 @@ public class LivrariaVirtual {
         System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  | Estoque |");
         System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
         for (int i = 0; i < numImpressos; i++) {
-            Impresso livro = livrosImpressos[i];
+            Impresso livro = impressos[i];
             System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | R$ %-4.2f | %-7d |\n",
                     i + 1, livro.getTitulo(), livro.getAutores(), livro.getEditora(),
                     livro.getPreco(), livro.getFrete(), livro.getEstoque());
@@ -230,7 +237,7 @@ public class LivrariaVirtual {
         System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Tamanho |");
         System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|---------|");
         for (int i = 0; i < numEletronicos; i++) {
-            Eletronico livro = livrosEletronicos[i];
+            Eletronico livro = eletronicos[i];
             System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | %-7d KB |\n",
                     i + 1, livro.getTitulo(), livro.getAutores(), livro.getEditora(),
                     livro.getPreco(), livro.getTamanho());
