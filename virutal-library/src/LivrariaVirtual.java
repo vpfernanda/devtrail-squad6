@@ -21,6 +21,47 @@ public class LivrariaVirtual {
         numVendas = 0;
     }
 
+    public static void main(String[] args) {
+        LivrariaVirtual livraria = new LivrariaVirtual();
+        Scanner scanner = new Scanner(System.in);
+        String option;
+
+        do {
+            System.out.println("\n|----------MENU PRINCIPAL----------|");
+            System.out.println("1. Cadastrar Livro");
+            System.out.println("2. Realizar Venda");
+            System.out.println("3. Listar Livros");
+            System.out.println("4. Listar Vendas");
+            System.out.println("0. Sair");
+            System.out.print("Escolha uma opção: ");
+            option = scanner.nextLine();
+
+            switch (option) {
+                case "1":
+                    livraria.cadastrarLivro();
+                    break;
+                case "2":
+                    livraria.realizarVenda();
+                    break;
+                case "3":
+                    livraria.listarLivros();
+                    break;
+                case "4":
+                    livraria.listarVendas();
+                    break;
+                case "0":
+                    System.out.println("Saindo do sistema...");
+                    break;
+                default:
+                    System.out.println("[" + option + "] não é uma opção válida! Tente novamente.");
+                    break;
+            }
+        } while (!option.equals("0"));
+
+        scanner.close();
+
+    }
+
     public void cadastrarLivro() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("|----------CADASTRAR LIVRO----------|");
@@ -43,7 +84,7 @@ public class LivrariaVirtual {
             float frete = inputFrete(scanner);
             int estoque = inputQuantidade(scanner, "Entre a quantidade do livro em estoque: ");
 
-            impressos[numImpressos++] = new Impresso(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]), frete, estoque);
+            impressos[numImpressos++] = new Impresso(entradas[0], entradas[1], entradas[2], Float.parseFloat(entradas[3]), frete, estoque);
         } else {
             System.out.println("Quantidade máxima de livros impressos foi atingida.");
         }
@@ -54,7 +95,7 @@ public class LivrariaVirtual {
             String[] entradas = inputInfoLivro(scanner);
             int tamanho = inputQuantidade(scanner, "Entre o tamanho do livro eletrônico: ");
 
-            eletronicos[numEletronicos++] = new Eletronico(entradas[0], entradas[1], entradas[2], Double.parseDouble(entradas[3]), tamanho);
+            eletronicos[numEletronicos++] = new Eletronico(entradas[0], entradas[1], entradas[2], Float.parseFloat(entradas[3]), tamanho);
         } else {
             System.out.println("Quantidade máxima de livros eletrônicos foi atingida.");
         }
@@ -75,7 +116,7 @@ public class LivrariaVirtual {
             System.out.println("Entre o preço do livro (apenas números, ex: 100.50): ");
             String precoStr = scanner.nextLine();
             try {
-                Double.parseDouble(precoStr);
+                Float.parseFloat(precoStr);
                 entradas[3] = precoStr;
                 break;
             } catch (NumberFormatException e) {
@@ -158,7 +199,7 @@ public class LivrariaVirtual {
             try {
                 livroEscolhido = scanner.nextInt();
                 if (livroEscolhido > 0 && livroEscolhido < livros.length) {
-                    venda.addLivro(livros[livroEscolhido]);
+                    venda.addLivro(livros[livroEscolhido], livroEscolhido);
                     numVendas++;
                     entradaValida = true; //finaliza o while.
                 } else {
@@ -171,28 +212,57 @@ public class LivrariaVirtual {
         }
     }
 
-
     public void listarLivrosImpressos() {
-        for(int i=0; i<impressos.length; i++){
-            System.out.println("|CÓD: "+i+"| -"+impressos[i].toString());
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|");
+        System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  | Estoque |");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
+        for (int i = 0; i < numImpressos; i++) {
+            Impresso livro = impressos[i];
+            System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | R$ %-4.2f | %-7d |\n",
+                    i + 1, livro.getTitulo(), livro.getAutores(), livro.getEditora(),
+                    livro.getPreco(), livro.getFrete(), livro.getEstoque());
         }
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
     }
 
     public void listarLivrosEletronicos() {
-        for(int i=0; i<eletronicos.length; i++){
-            System.out.println("|CÓD: "+i+"| -"+eletronicos[i].toString());
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|---------|");
+        System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Tamanho |");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|---------|");
+        for (int i = 0; i < numEletronicos; i++) {
+            Eletronico livro = eletronicos[i];
+            System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | %-7d KB |\n",
+                    i + 1, livro.getTitulo(), livro.getAutores(), livro.getEditora(),
+                    livro.getPreco(), livro.getTamanho());
         }
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|---------|");
     }
 
     public void listarLivros() {
-        //@TODO
+        System.out.println("|----------LIVROS IMPRESSOS----------|");
+        listarLivrosImpressos();
+        System.out.println("|----------LIVROS ELETRÔNICOS----------|");
+        listarLivrosEletronicos();
     }
 
     public void listarVendas() {
-        //@TODO
+        System.out.println("|-----|----------------------------|---------------------------------------------------------------|");
+        System.out.println("| ID  | Cliente                    | Livros                                                        |");
+        System.out.println("|-----|----------------------------|---------------------------------------------------------------|");
+        for (int i = 0; i < numVendas; i++) {
+            Venda venda = vendas[i];
+            System.out.printf("| %-3d | %-26s | %-53s |\n", i + 1, venda.getCliente(), formatLivros(venda.getLivros()));
+        }
+        System.out.println("|-----|----------------------------|---------------------------------------------------------------|");
     }
 
-    public static void main(String[] args) {
-        //@TODO
+    private String formatLivros(Livro[] livros) {
+        StringBuilder sb = new StringBuilder();
+        for (Livro livro : livros) {
+            if (livro != null) {
+                sb.append(livro.getTitulo()).append(", ");
+            }
+        }
+        return sb.toString().replaceAll(", $", "");
     }
 }
