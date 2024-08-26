@@ -38,10 +38,10 @@ public class LivrariaVirtual {
 
             switch (option) {
                 case "1":
-                    livraria.cadastrarLivro();
+                    livraria.cadastrarLivro(scanner);
                     break;
                 case "2":
-                    livraria.realizarVenda();
+                    livraria.realizarVenda(scanner);
                     break;
                 case "3":
                     livraria.listarLivros();
@@ -62,27 +62,31 @@ public class LivrariaVirtual {
 
     }
 
-    public void cadastrarLivro() {
-        Scanner scanner = new Scanner(System.in);
+    public void cadastrarLivro(Scanner scanner) {
         System.out.println("|----------CADASTRAR LIVRO----------|");
         System.out.println("Qual tipo de livro será cadastrado? \nDigite 1 para Impresso, 2 para Eletrônico, 3 para Ambos: ");
         String tipoLivro = scanner.nextLine();
-        boolean opcaoValida = false;
 
-        if (tipoLivro.equals("1") || tipoLivro.equals("3")) {
-            cadastrarLivroImpresso(scanner);
-            opcaoValida = true;
-        }
-        if (tipoLivro.equals("2") || tipoLivro.equals("3")) {
-            cadastrarLivroEletronico(scanner);
-            opcaoValida = true;
-        }
-        else if (!opcaoValida) {
-            System.out.println("Opção inválida.");
+
+        switch (tipoLivro) {
+            case "1":
+                cadastrarLivroImpresso(scanner);
+                break;
+            case "2":
+                cadastrarLivroEletronico(scanner);
+                break;
+            case "3":
+                cadastrarLivroImpresso(scanner);
+                cadastrarLivroEletronico(scanner);
+                break;
+            default:
+                System.out.println("Opção inválida.");
+                cadastrarLivro(scanner);
         }
     }
 
     private void cadastrarLivroImpresso(Scanner scanner) {
+        System.out.println("|----------NOVO LIVRO IMPRESSO----------|");
         if (numImpressos < MAX_IMPRESSOS) {
             String[] entradas = inputInfoLivro(scanner);
             float frete = inputFrete(scanner);
@@ -96,6 +100,7 @@ public class LivrariaVirtual {
     }
 
     private void cadastrarLivroEletronico(Scanner scanner) {
+        System.out.println("|----------NOVO LIVRO ELETRÔNICO----------|");
         if (numEletronicos < MAX_ELETRONICOS) {
             String[] entradas = inputInfoLivro(scanner);
             int tamanho = inputQuantidade(scanner, "Entre o tamanho do livro eletrônico: ");
@@ -148,6 +153,7 @@ public class LivrariaVirtual {
             System.out.println(mensagem);
             try {
                 int quantidade = scanner.nextInt();
+                scanner.nextLine();
                 if (quantidade > 0) {
                     return quantidade;
                 } else {
@@ -160,8 +166,7 @@ public class LivrariaVirtual {
         }
     }
 
-    public void realizarVenda() {
-        Scanner scanner = new Scanner(System.in);
+    public void realizarVenda(Scanner scanner) {
         if (numVendas < MAX_VENDAS) {
             System.out.println("|----------REALIZAR VENDA----------|");
             System.out.println("Entre o nome do cliente: ");
@@ -204,6 +209,7 @@ public class LivrariaVirtual {
             System.out.println(mensagem);
             try {
                 livroEscolhido = scanner.nextInt();
+                scanner.nextLine();
                 livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
                 if (livroEscolhido > 0 && livroEscolhido <= livros.length) {
                     venda.addLivro(livros[livroEscolhido], livroEscolhido);
@@ -220,9 +226,9 @@ public class LivrariaVirtual {
     }
 
     public void listarLivrosImpressos() {
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|");
-        System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  | Estoque |");
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|----------|");
+        System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  |  Estoque  |");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|------------|");
         for (int i = 0; i < numImpressos; i++) {
             Impresso livro = impressos[i];
             System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | R$ %-4.2f | %-7d |\n",
