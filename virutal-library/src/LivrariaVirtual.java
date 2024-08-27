@@ -184,11 +184,11 @@ public class LivrariaVirtual {
                 switch (tipoLivro) {
                     case "1":
                         listarLivrosImpressos();
-                        adicionarLivro(venda, impressos, "Digite o código do livro desejado: ", scanner);
+                        adicionarLivro(venda, impressos, "Digite o código do livro desejado: ", scanner, i);
                         break;
                     case "2":
                         listarLivrosEletronicos();
-                        adicionarLivro(venda, eletronicos, "Digite o código do livro desejado: ", scanner);
+                        adicionarLivro(venda, eletronicos, "Digite o código do livro desejado: ", scanner, i);
                         break;
                     default:
                         System.out.println("Digite uma opção válida.");
@@ -196,12 +196,14 @@ public class LivrariaVirtual {
                         break;
                 }
             }
+            vendas[numVendas] = venda;
+            numVendas++;
         } else {
             System.out.println("Quantidade máxima de vendas foi atingida.");
         }
     }
 
-    private void adicionarLivro(Venda venda, Livro[] livros, String mensagem, Scanner scanner) {
+    private void adicionarLivro(Venda venda, Livro[] livros, String mensagem, Scanner scanner, int indiceLivroAdd) {
         int livroEscolhido = -1;
         boolean entradaValida = false;
 
@@ -210,10 +212,10 @@ public class LivrariaVirtual {
             try {
                 livroEscolhido = scanner.nextInt();
                 scanner.nextLine();
-                livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
+
                 if (livroEscolhido > 0 && livroEscolhido <= livros.length) {
-                    venda.addLivro(livros[livroEscolhido], livroEscolhido);
-                    numVendas++;
+                    livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
+                    venda.addLivro(livros[livroEscolhido], indiceLivroAdd);
                     entradaValida = true; //finaliza o while.
                 } else {
                     System.out.println("Digite uma opção válida.");
