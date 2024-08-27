@@ -38,10 +38,10 @@ public class LivrariaVirtual {
 
             switch (option) {
                 case "1":
-                    livraria.cadastrarLivro();
+                    livraria.cadastrarLivro(scanner);
                     break;
                 case "2":
-                    livraria.realizarVenda();
+                    livraria.realizarVenda(scanner);
                     break;
                 case "3":
                     livraria.listarLivros();
@@ -62,8 +62,7 @@ public class LivrariaVirtual {
 
     }
 
-    public void cadastrarLivro() {
-        Scanner scanner = new Scanner(System.in);
+    public void cadastrarLivro(Scanner scanner) {
         System.out.println("|----------CADASTRAR LIVRO----------|");
         System.out.println("Qual tipo de livro será cadastrado? \nDigite 1 para Impresso, 2 para Eletrônico, 3 para Ambos: ");
         String tipoLivro = scanner.nextLine();
@@ -148,20 +147,21 @@ public class LivrariaVirtual {
             System.out.println(mensagem);
             try {
                 int quantidade = scanner.nextInt();
+                scanner.nextLine();
+
                 if (quantidade > 0) {
                     return quantidade;
-                } else {
-                    System.out.println("A quantidade deve ser maior que zero.");
                 }
+
+                System.out.println("A quantidade deve ser maior que zero.");
+
             } catch (InputMismatchException e) {
                 System.out.println("Insira uma quantidade válida.");
-                scanner.next(); // Limpa o scanner
             }
         }
     }
 
-    public void realizarVenda() {
-        Scanner scanner = new Scanner(System.in);
+    public void realizarVenda(Scanner scanner) {
         if (numVendas < MAX_VENDAS) {
             System.out.println("|----------REALIZAR VENDA----------|");
             System.out.println("Entre o nome do cliente: ");
@@ -191,6 +191,9 @@ public class LivrariaVirtual {
                         break;
                 }
             }
+
+            numVendas++;
+
         } else {
             System.out.println("Quantidade máxima de vendas foi atingida.");
         }
@@ -204,32 +207,30 @@ public class LivrariaVirtual {
             System.out.println(mensagem);
             try {
                 livroEscolhido = scanner.nextInt();
-                livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
+                scanner.nextLine();
                 if (livroEscolhido > 0 && livroEscolhido <= livros.length) {
-                    venda.addLivro(livros[livroEscolhido], livroEscolhido);
-                    numVendas++;
+                    venda.addLivro(livros[livroEscolhido-1], livroEscolhido-1);
                     entradaValida = true; //finaliza o while.
                 } else {
                     System.out.println("Digite uma opção válida.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, digite um número.");
-                scanner.next(); // Limpa o scanner.
             }
         }
     }
 
     public void listarLivrosImpressos() {
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|---------|");
         System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  | Estoque |");
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|---------|");
         for (int i = 0; i < numImpressos; i++) {
             Impresso livro = impressos[i];
             System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | R$ %-4.2f | %-7d |\n",
                     i + 1, livro.getTitulo(), livro.getAutores(), livro.getEditora(),
                     livro.getPreco(), livro.getFrete(), livro.getEstoque());
         }
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|---------|");
     }
 
     public void listarLivrosEletronicos() {
