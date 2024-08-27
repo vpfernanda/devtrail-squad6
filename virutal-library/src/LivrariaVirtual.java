@@ -195,7 +195,7 @@ public class LivrariaVirtual {
                         break;
                 }
             }
-
+            vendas[numVendas] = venda;
             numVendas++;
 
         } else {
