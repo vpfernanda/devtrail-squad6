@@ -66,22 +66,27 @@ public class LivrariaVirtual {
         System.out.println("|----------CADASTRAR LIVRO----------|");
         System.out.println("Qual tipo de livro será cadastrado? \nDigite 1 para Impresso, 2 para Eletrônico, 3 para Ambos: ");
         String tipoLivro = scanner.nextLine();
-        boolean opcaoValida = false;
 
-        if (tipoLivro.equals("1") || tipoLivro.equals("3")) {
-            cadastrarLivroImpresso(scanner);
-            opcaoValida = true;
-        }
-        if (tipoLivro.equals("2") || tipoLivro.equals("3")) {
-            cadastrarLivroEletronico(scanner);
-            opcaoValida = true;
-        }
-        else if (!opcaoValida) {
-            System.out.println("Opção inválida.");
+
+        switch (tipoLivro) {
+            case "1":
+                cadastrarLivroImpresso(scanner);
+                break;
+            case "2":
+                cadastrarLivroEletronico(scanner);
+                break;
+            case "3":
+                cadastrarLivroImpresso(scanner);
+                cadastrarLivroEletronico(scanner);
+                break;
+            default:
+                System.out.println("Opção inválida.");
+                cadastrarLivro(scanner);
         }
     }
 
     private void cadastrarLivroImpresso(Scanner scanner) {
+        System.out.println("|----------NOVO LIVRO IMPRESSO----------|");
         if (numImpressos < MAX_IMPRESSOS) {
             String[] entradas = inputInfoLivro(scanner);
             float frete = inputFrete(scanner);
@@ -95,6 +100,7 @@ public class LivrariaVirtual {
     }
 
     private void cadastrarLivroEletronico(Scanner scanner) {
+        System.out.println("|----------NOVO LIVRO ELETRÔNICO----------|");
         if (numEletronicos < MAX_ELETRONICOS) {
             String[] entradas = inputInfoLivro(scanner);
             int tamanho = inputQuantidade(scanner, "Entre o tamanho do livro eletrônico: ");
@@ -148,13 +154,11 @@ public class LivrariaVirtual {
             try {
                 int quantidade = scanner.nextInt();
                 scanner.nextLine();
-
                 if (quantidade > 0) {
                     return quantidade;
+                } else {
+                    System.out.println("A quantidade deve ser maior que zero.");
                 }
-
-                System.out.println("A quantidade deve ser maior que zero.");
-
             } catch (InputMismatchException e) {
                 System.out.println("Insira uma quantidade válida.");
             }
