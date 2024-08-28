@@ -14,8 +14,14 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
-@AllArgsConstructor
 public class Pessoa {
+
+    public Pessoa(String nome, LocalDate dataNascimento, String cpf, Sexo sexo) {
+        this.nome = nome;
+        this.dataNascimento = dataNascimento;
+        this.cpf = cpf;
+        this.sexo = sexo;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
