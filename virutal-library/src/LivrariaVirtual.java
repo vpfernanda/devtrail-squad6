@@ -161,7 +161,6 @@ public class LivrariaVirtual {
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Insira uma quantidade válida.");
-                scanner.next(); // Limpa o scanner
             }
         }
     }
@@ -184,11 +183,11 @@ public class LivrariaVirtual {
                 switch (tipoLivro) {
                     case "1":
                         listarLivrosImpressos();
-                        adicionarLivro(venda, impressos, "Digite o código do livro desejado: ", scanner, i);
+                        adicionarLivro(venda, impressos, "Digite o código do livro desejado: ", scanner);
                         break;
                     case "2":
                         listarLivrosEletronicos();
-                        adicionarLivro(venda, eletronicos, "Digite o código do livro desejado: ", scanner, i);
+                        adicionarLivro(venda, eletronicos, "Digite o código do livro desejado: ", scanner);
                         break;
                     default:
                         System.out.println("Digite uma opção válida.");
@@ -198,12 +197,13 @@ public class LivrariaVirtual {
             }
             vendas[numVendas] = venda;
             numVendas++;
+
         } else {
             System.out.println("Quantidade máxima de vendas foi atingida.");
         }
     }
 
-    private void adicionarLivro(Venda venda, Livro[] livros, String mensagem, Scanner scanner, int indiceLivroAdd) {
+    private void adicionarLivro(Venda venda, Livro[] livros, String mensagem, Scanner scanner) {
         int livroEscolhido = -1;
         boolean entradaValida = false;
 
@@ -212,32 +212,29 @@ public class LivrariaVirtual {
             try {
                 livroEscolhido = scanner.nextInt();
                 scanner.nextLine();
-
                 if (livroEscolhido > 0 && livroEscolhido <= livros.length) {
-                    livroEscolhido = livroEscolhido-1; //Corrige a diferença do ID mostrado na tela para a posição do vetor.
-                    venda.addLivro(livros[livroEscolhido], indiceLivroAdd);
+                    venda.addLivro(livros[livroEscolhido-1], livroEscolhido-1);
                     entradaValida = true; //finaliza o while.
                 } else {
                     System.out.println("Digite uma opção válida.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Entrada inválida. Por favor, digite um número.");
-                scanner.next(); // Limpa o scanner.
             }
         }
     }
 
     public void listarLivrosImpressos() {
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|----------|");
-        System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  |  Estoque  |");
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|------------|");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|---------|");
+        System.out.println("| ID  | Título                     | Autores                    | Editora         | Preço    | Frete  | Estoque |");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|---------|");
         for (int i = 0; i < numImpressos; i++) {
             Impresso livro = impressos[i];
             System.out.printf("| %-3d | %-26s | %-26s | %-15s | R$ %-6.2f | R$ %-4.2f | %-7d |\n",
                     i + 1, livro.getTitulo(), livro.getAutores(), livro.getEditora(),
                     livro.getPreco(), livro.getFrete(), livro.getEstoque());
         }
-        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|--------|");
+        System.out.println("|-----|----------------------------|----------------------------|-----------------|----------|--------|---------|");
     }
 
     public void listarLivrosEletronicos() {
