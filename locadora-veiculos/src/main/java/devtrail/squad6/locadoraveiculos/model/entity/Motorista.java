@@ -1,4 +1,19 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
-public class Motorista {
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Entity
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+public class Motorista extends Pessoa {
+    @Column(name = "numeroCNH", unique = true)
+    private String numeroCNH;
+
 }
