@@ -32,4 +32,16 @@ public class Aluguel implements Serializable {
     @Column(name = "valortotal", nullable = false)
     private BigDecimal valorTotal;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "apolice_seguro_id")
+    private ApoliceSeguro apoliceSeguro;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "motorista_id")
+    private Motorista motorista;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "carro_id")
+    private Carro carro;
+
 }
