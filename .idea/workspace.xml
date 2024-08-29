@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="a5891a67-6234-45ae-893e-b67ccc629210" name="Changes" comment="Merge branch 'isaac' of https://github.com/isaac-conceicao/devtrail-squad6 into Gabriel">
+    <list default="true" id="fd556600-dcd6-48d6-a899-abe0c3e14fb1" name="Changes" comment="Commit .idea directory">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -12,194 +12,75 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="fernanda" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
-  <component name="ProjectColorInfo">{
-  &quot;associatedIndex&quot;: 2
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;vpfernanda&quot;
+  }
 }</component>
-  <component name="ProjectId" id="2ksG8enMCxgY4RrUS33B7yzFfV0" />
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/vpfernanda/devtrail-squad6.git&quot;,
+    &quot;accountId&quot;: &quot;a7c5d5ab-c4fb-4e33-867e-a896b2d24e68&quot;
+  }
+}</component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 1
+}</component>
+  <component name="ProjectId" id="2lKf8qZJSSUvuuE4jUMcWkUTSJc" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
-    "Application.CalculadorIdade.executor": "Run",
-    "Application.ExibirMilVezesNumero.executor": "Run",
-    "Application.NumerosImpares.executor": "Run",
-    "Application.OrdenarNumeros.executor": "Run",
-    "Application.RelatorioClinica.executor": "Run",
-    "Application.SequenciaFibonacci.executor": "Run",
-    "Application.SistemaAvaliacao.executor": "Run",
-    "Application.Tabuada.executor": "Run",
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "Gabriel",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Gabriel/IdeaProjects/devtrail-squad6/locadora-veiculos",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "vue.rearranger.settings.migration": "true"
+    "git-widget-placeholder": "all__models",
+    "kotlin-language-version-configured": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Application.SistemaAvaliacao">
-    <configuration name="NumerosImpares" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="q36.NumerosImpares" />
-      <module name="devtrail-squad6" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="q36.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="RelatorioClinica" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="q47.RelatorioClinica" />
-      <module name="devtrail-squad6" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="q47.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SequenciaFibonacci" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="q49.SequenciaFibonacci" />
-      <module name="devtrail-squad6" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="q49.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="SistemaAvaliacao" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="q48.SistemaAvaliacao" />
-      <module name="devtrail-squad6" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="q48.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="Tabuada" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="q59.Tabuada" />
-      <module name="devtrail-squad6" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="q59.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.SistemaAvaliacao" />
-        <item itemvalue="Application.Tabuada" />
-        <item itemvalue="Application.SequenciaFibonacci" />
-        <item itemvalue="Application.RelatorioClinica" />
-        <item itemvalue="Application.NumerosImpares" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="bundled-jdk-9f38398b9061-39b83d9b5494-intellij.indexing.shared.core-IU-241.15989.150" />
-        <option value="bundled-js-predefined-1d06a55b98c1-91d5c284f522-JavaScript-IU-241.15989.150" />
-      </set>
-    </attachedChunks>
-  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
-      <changelist id="a5891a67-6234-45ae-893e-b67ccc629210" name="Changes" comment="" />
-      <created>1724064712373</created>
+      <changelist id="fd556600-dcd6-48d6-a899-abe0c3e14fb1" name="Changes" comment="" />
+      <created>1724933531547</created>
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
-      <updated>1724064712373</updated>
-      <workItem from="1724064713405" duration="36000" />
-      <workItem from="1724065978565" duration="619000" />
-      <workItem from="1724152767211" duration="830000" />
-      <workItem from="1724156928106" duration="1421000" />
-      <workItem from="1724236569621" duration="11534000" />
-      <workItem from="1724277195654" duration="2631000" />
-      <workItem from="1724322383620" duration="16000" />
-      <workItem from="1724357722171" duration="876000" />
-      <workItem from="1724376748364" duration="1207000" />
-      <workItem from="1724409315232" duration="735000" />
-      <workItem from="1724533982298" duration="184000" />
-      <workItem from="1724534176803" duration="37000" />
-      <workItem from="1724725315216" duration="29000" />
-      <workItem from="1724765286392" duration="953000" />
+      <updated>1724933531547</updated>
     </task>
-    <task id="LOCAL-00001" summary="Questões resolvidas">
+    <task id="LOCAL-00001" summary="Commit .idea directory">
       <option name="closed" value="true" />
-      <created>1724279166272</created>
+      <created>1724960573673</created>
       <option name="number" value="00001" />
       <option name="presentableId" value="LOCAL-00001" />
       <option name="project" value="LOCAL" />
-      <updated>1724279166272</updated>
+      <updated>1724960573673</updated>
     </task>
-    <task id="LOCAL-00002" summary="Correções feitas">
-      <option name="closed" value="true" />
-      <created>1724358363048</created>
-      <option name="number" value="00002" />
-      <option name="presentableId" value="LOCAL-00002" />
-      <option name="project" value="LOCAL" />
-      <updated>1724358363048</updated>
-    </task>
-    <task id="LOCAL-00003" summary="Merge branch 'isaac' of https://github.com/isaac-conceicao/devtrail-squad6 into Gabriel">
-      <option name="closed" value="true" />
-      <created>1724766388372</created>
-      <option name="number" value="00003" />
-      <option name="presentableId" value="LOCAL-00003" />
-      <option name="project" value="LOCAL" />
-      <updated>1724766388372</updated>
-    </task>
-    <option name="localTasksCounter" value="4" />
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Questões resolvidas" />
-    <MESSAGE value="Correções feitas" />
-    <MESSAGE value="Merge branch 'isaac' of https://github.com/isaac-conceicao/devtrail-squad6 into Gabriel&#10;&#10;# Conflicts:&#10;#&#9;.idea/misc.xml" />
-    <MESSAGE value="Merge branch 'isaac' of https://github.com/isaac-conceicao/devtrail-squad6 into Gabriel" />
-    <option name="LAST_COMMIT_MESSAGE" value="Merge branch 'isaac' of https://github.com/isaac-conceicao/devtrail-squad6 into Gabriel" />
+    <MESSAGE value="Commit .idea directory" />
+    <option name="LAST_COMMIT_MESSAGE" value="Commit .idea directory" />
   </component>
 </project>
