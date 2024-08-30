@@ -35,4 +35,9 @@ public class Carro implements Serializable {
             inverseJoinColumns = @JoinColumn(name = "acessorio_id")
     )
     private Set<Acessorio> acessorios;
+
+
+    @ManyToOne
+    @JoinColumn(name = "modelo_id", nullable = false)
+    private ModeloCarro modelo;
 }
