@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 @Entity
 @Table(name = "carros")
@@ -26,4 +27,12 @@ public class Carro implements Serializable {
     private String cor;
     @Column(name = "", nullable = false)
     private BigDecimal valorDiaria;
+
+    @ManyToMany
+    @JoinTable(
+            name = "carro_acessorio",
+            joinColumns = @JoinColumn(name = "carro_id"),
+            inverseJoinColumns = @JoinColumn(name = "acessorio_id")
+    )
+    private Set<Acessorio> acessorios;
 }

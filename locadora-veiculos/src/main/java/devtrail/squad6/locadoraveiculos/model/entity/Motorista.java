@@ -12,6 +12,7 @@ import java.io.Serializable;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+
 public class Motorista extends Pessoa implements Serializable {
     @Column(name = "numeroCNH", unique = true)
     private String numeroCNH;
