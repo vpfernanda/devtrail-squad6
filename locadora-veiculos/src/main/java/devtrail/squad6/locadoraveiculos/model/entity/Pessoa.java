@@ -3,6 +3,7 @@ package devtrail.squad6.locadoraveiculos.model.entity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
@@ -14,6 +15,7 @@ import java.time.LocalDate;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class Pessoa {
 
     public Pessoa(String nome, LocalDate dataNascimento, String cpf, Sexo sexo) {

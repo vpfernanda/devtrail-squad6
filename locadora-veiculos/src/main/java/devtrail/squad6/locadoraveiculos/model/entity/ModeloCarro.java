@@ -6,16 +6,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class ModeloCarro {
+public class ModeloCarro  implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false, unique = true)
     private String descricao;
 
     @Enumerated(EnumType.STRING)
@@ -23,4 +25,10 @@ public class ModeloCarro {
 
     @OneToMany
     private Fabricante fabricante;
+
+    public ModeloCarro(String descricao, Categoria categoria, Fabricante fabricante) {
+        this.descricao = descricao;
+        this.categoria = categoria;
+        this.fabricante = fabricante;
+    }
 }

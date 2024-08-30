@@ -7,12 +7,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
+
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Motorista extends Pessoa {
+public class Motorista extends Pessoa  implements Serializable {
     @Column(name = "numeroCNH", unique = true)
     private String numeroCNH;
 
