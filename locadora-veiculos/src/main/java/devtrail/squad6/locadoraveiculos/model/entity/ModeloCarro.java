@@ -12,23 +12,18 @@ import java.io.Serializable;
 @Getter
 @Setter
 @NoArgsConstructor
-public class ModeloCarro  implements Serializable {
+@AllArgsConstructor
+public class ModeloCarro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String descricao;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "fabricante_id")
     private Fabricante fabricante;
-
-    public ModeloCarro(String descricao, Categoria categoria, Fabricante fabricante) {
-        this.descricao = descricao;
-        this.categoria = categoria;
-        this.fabricante = fabricante;
-    }
 }

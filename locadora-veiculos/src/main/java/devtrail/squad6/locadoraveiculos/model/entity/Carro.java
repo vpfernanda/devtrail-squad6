@@ -18,7 +18,7 @@ public class Carro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "placa", nullable = false, length = 7)
+    @Column(name = "placa", nullable = false, length = 7, unique = true)
     private String placa;
     @Column(name = "chassi", nullable = false, length = 17, unique = true )
     private String chassi;
