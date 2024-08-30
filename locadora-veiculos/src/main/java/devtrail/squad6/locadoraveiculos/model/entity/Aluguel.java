@@ -20,6 +20,14 @@ public class Aluguel implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne
+    @JoinColumn(name = "carro_id", nullable = false)
+    private Carro carro;
+
+    @ManyToOne
+    @JoinColumn(name = "motorista_id", nullable = false)
+    private Motorista motorista;
+
     @Column(name = "datapedido", nullable = false)
     private Calendar dataPedido;
 
@@ -31,5 +39,6 @@ public class Aluguel implements Serializable {
 
     @Column(name = "valortotal", nullable = false)
     private BigDecimal valorTotal;
+
 
 }

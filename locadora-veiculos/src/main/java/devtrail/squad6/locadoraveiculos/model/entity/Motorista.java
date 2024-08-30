@@ -1,10 +1,10 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -16,5 +16,8 @@ import java.io.Serializable;
 public class Motorista extends Pessoa implements Serializable {
     @Column(name = "numeroCNH", unique = true)
     private String numeroCNH;
+
+    @OneToMany(mappedBy = "motorista")
+    private Set<Aluguel> alugueis;
 
 }

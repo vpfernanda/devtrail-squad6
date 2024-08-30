@@ -10,7 +10,7 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @Entity
-@Table(name = "carros")
+@Table(name = "carro")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -40,4 +40,7 @@ public class Carro implements Serializable {
     @ManyToOne
     @JoinColumn(name = "modelo_id", nullable = false)
     private ModeloCarro modelo;
+
+    @OneToMany(mappedBy = "carro")
+    private Set<Aluguel> alugueis;
 }
