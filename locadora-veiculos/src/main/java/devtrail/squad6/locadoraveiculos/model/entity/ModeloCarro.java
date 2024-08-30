@@ -21,6 +21,7 @@ public class ModeloCarro {
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
-    @OneToMany
+    @ManyToOne
+    @JoinColumn(name = "fabricante_id")
     private Fabricante fabricante;
 }
