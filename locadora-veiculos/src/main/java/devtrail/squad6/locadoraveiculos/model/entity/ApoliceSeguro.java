@@ -38,8 +38,7 @@ public class ApoliceSeguro implements Serializable {
     @Column (nullable = false)
     private boolean protecaoRoubo;
 
-    @OneToOne
-    @JoinColumn(name = "aluguel_id")
+    @OneToOne(mappedBy = "aluguel_id")
     private Aluguel aluguel;
 
 
