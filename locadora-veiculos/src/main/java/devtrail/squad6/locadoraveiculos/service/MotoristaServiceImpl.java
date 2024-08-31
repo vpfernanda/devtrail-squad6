@@ -2,16 +2,18 @@ package devtrail.squad6.locadoraveiculos.service;
 
 import devtrail.squad6.locadoraveiculos.model.entity.Motorista;
 import devtrail.squad6.locadoraveiculos.repository.MotoristaRepository;
+import devtrail.squad6.locadoraveiculos.service.interfaces.MotoristaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class MotoristaServiceImpl {
+public class MotoristaServiceImpl implements MotoristaService {
     @Autowired
     private MotoristaRepository motoristaRepository;
 
+    @Override
     public List<Motorista> findAll() {
         try {
             return motoristaRepository.findAll();
@@ -20,6 +22,7 @@ public class MotoristaServiceImpl {
         }
     }
 
+    @Override
     public Motorista save(Motorista motorista) {
         try {
             if (!isCPF(motorista.getCpf())) {
@@ -113,11 +116,13 @@ public class MotoristaServiceImpl {
         return motoristaRepository.findMotoristaByEmail(email) != null;
     }
 
+    @Override
     public Motorista findByEmail(String email) {
         return motoristaRepository.findMotoristaByEmail(email);
     }
 
-    public void remove(Long motoristaId) {
+    @Override
+    public void deleteById(Long motoristaId) {
         try {
             motoristaRepository.deleteById(motoristaId);
         } catch (Exception e) {

@@ -43,7 +43,7 @@ public class MotoristaController {
     @DeleteMapping("/{motoristaId}")
     public ResponseEntity<String> removeMotorista(@PathVariable Long motoristaId) {
         try {
-            motoristaService.remove(motoristaId);
+            motoristaService.deleteById(motoristaId);
             return ResponseEntity.ok("Motorista removido com sucesso");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
