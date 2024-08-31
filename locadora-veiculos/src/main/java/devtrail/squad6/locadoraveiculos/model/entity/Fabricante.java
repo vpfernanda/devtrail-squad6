@@ -21,7 +21,7 @@ public class Fabricante  implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "nome_fabricante", nullable = false)
+    @Column(name = "nome_fabricante", nullable = false,length = 100)
     private String nome;
 
     @OneToMany(mappedBy = "fabricante", cascade = CascadeType.ALL, orphanRemoval = true)

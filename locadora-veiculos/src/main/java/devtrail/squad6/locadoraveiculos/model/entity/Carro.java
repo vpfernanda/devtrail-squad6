@@ -26,7 +26,7 @@ public class Carro implements Serializable {
     private String chassi;
     @Column(name = "cor", nullable = false, length =100 )
     private String cor;
-    @Column(name = "", nullable = false)
+    @Column(name = "valor_diaria", nullable = false)
     private BigDecimal valorDiaria;
 
     @ManyToMany
@@ -37,11 +37,10 @@ public class Carro implements Serializable {
     )
     private Set<Acessorio> acessorios = new HashSet<>();
 
-
     @ManyToOne
     @JoinColumn(name = "modelo_id", nullable = false)
     private ModeloCarro modelo;
 
-    @OneToMany(mappedBy = "carro")
+    @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Aluguel> alugueis;
 }
