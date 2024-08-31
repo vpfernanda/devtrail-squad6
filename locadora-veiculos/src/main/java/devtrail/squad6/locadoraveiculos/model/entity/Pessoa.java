@@ -16,10 +16,11 @@ import java.time.LocalDate;
 @NoArgsConstructor
 public class Pessoa implements Serializable {
 
-    public Pessoa(String nome, LocalDate dataNascimento, String cpf, Sexo sexo) {
+    public Pessoa(String nome, LocalDate dataNascimento, String cpf, String email, Sexo sexo) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
         this.cpf = cpf;
+        this.email = email;
         this.sexo = sexo;
     }
 
@@ -35,6 +36,9 @@ public class Pessoa implements Serializable {
 
     @Column(nullable = false, unique = true)
     private String cpf;
+
+    @Column(nullable = false, unique = true)
+    private String email;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "sexo", nullable = false)

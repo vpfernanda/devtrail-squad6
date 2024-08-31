@@ -17,6 +17,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Funcionario extends Pessoa implements Serializable {
-    @Column(name = "matricula", unique = true)
+    @Column(name = "matricula", unique = true, nullable = false)
     private String matricula;
 }
