@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Getter
@@ -27,5 +28,5 @@ public class Acessorio implements Serializable {
     private String descricao;
 
     @ManyToMany(mappedBy = "acessorios")
-    private Set<Carro> carros;
+    private Set<Carro> carros = new HashSet<>();
 }

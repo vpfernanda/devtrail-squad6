@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -34,7 +35,7 @@ public class Carro implements Serializable {
             joinColumns = @JoinColumn(name = "carro_id"),
             inverseJoinColumns = @JoinColumn(name = "acessorio_id")
     )
-    private Set<Acessorio> acessorios;
+    private Set<Acessorio> acessorios = new HashSet<>();
 
 
     @ManyToOne

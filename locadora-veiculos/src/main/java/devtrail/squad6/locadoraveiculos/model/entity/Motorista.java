@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 
 @Entity
@@ -18,6 +19,6 @@ public class Motorista extends Pessoa implements Serializable {
     private String numeroCNH;
 
     @OneToMany(mappedBy = "motorista")
-    private Set<Aluguel> alugueis;
+    private Set<Aluguel> alugueis = new HashSet<>();
 
 }

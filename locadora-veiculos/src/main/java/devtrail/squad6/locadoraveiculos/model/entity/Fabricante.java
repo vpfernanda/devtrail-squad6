@@ -7,7 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "fabricantes")
@@ -24,6 +25,6 @@ public class Fabricante  implements Serializable {
     private String nome;
 
     @OneToMany(mappedBy = "fabricante", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ModeloCarro> modelosCarro;
+    private Set<ModeloCarro> modelosCarro = new HashSet<>();
 
 }
