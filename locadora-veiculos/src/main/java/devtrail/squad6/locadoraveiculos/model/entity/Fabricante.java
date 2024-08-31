@@ -7,6 +7,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "fabricantes")
@@ -21,5 +23,8 @@ public class Fabricante  implements Serializable {
 
     @Column(name = "nome_fabricante", nullable = false)
     private String nome;
+
+    @OneToMany(mappedBy = "fabricante", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Set<ModeloCarro> modelosCarro = new HashSet<>();
 
 }
