@@ -2,15 +2,13 @@ package devtrail.squad6.locadoraveiculos.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 
-@Getter
-@Setter
 @Data
+@NoArgsConstructor
 @Entity
 @Table (name = "apolice-seguro")
 public class ApoliceSeguro implements Serializable {
@@ -38,7 +36,7 @@ public class ApoliceSeguro implements Serializable {
     @Column (nullable = false)
     private boolean protecaoRoubo;
 
-    @OneToOne(mappedBy = "aluguel_id")
+    @OneToOne(mappedBy = "apoliceSeguro")
     private Aluguel aluguel;
 
 

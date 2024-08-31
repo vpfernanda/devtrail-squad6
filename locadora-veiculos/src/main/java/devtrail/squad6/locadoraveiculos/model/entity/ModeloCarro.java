@@ -1,39 +1,27 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
-import java.util.List;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+@AllArgsConstructor
+@Table(name = "modelo_carro")
 public class ModeloCarro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;
 
     @ManyToOne
-    @JoinColumn(name = "id_fabricante")
+    @JoinColumn(name = "fabricante_id")
     private Fabricante fabricante;
-
-    @OneToMany(mappedBy = "modelo")
-    private List<Carro> carros;
-
-    public ModeloCarro(String descricao, Categoria categoria, Fabricante fabricante, List<Carro> carros) {
-        this.descricao = descricao;
-        this.categoria = categoria;
-        this.fabricante = fabricante;
-        this.carros = carros;
-    }
 }

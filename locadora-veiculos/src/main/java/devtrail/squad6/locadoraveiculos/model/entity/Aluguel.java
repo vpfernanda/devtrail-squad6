@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -33,16 +34,13 @@ public class Aluguel implements Serializable {
     private ApoliceSeguro apoliceSeguro;
 
     @Column(name = "datapedido", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Calendar dataPedido;
+    private LocalDate dataPedido;
 
     @Column(name = "dataentrega", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataEntrega;
+    private LocalDate dataEntrega;
 
     @Column(name = "datadevolucao", nullable = false)
-    @Temporal(TemporalType.DATE)
-    private Date dataDevolucao;
+    private LocalDate dataDevolucao;
 
     @Column(name = "valortotal", nullable = false)
     private BigDecimal valorTotal;
