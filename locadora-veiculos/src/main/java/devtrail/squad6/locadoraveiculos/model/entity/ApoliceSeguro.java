@@ -38,7 +38,7 @@ public class ApoliceSeguro implements Serializable {
     @Column (nullable = false)
     private boolean protecaoRoubo;
 
-    @OneToOne(mappedBy = "aluguel_id")
+    @OneToOne(mappedBy = "apoliceSeguro")
     private Aluguel aluguel;
 
 
