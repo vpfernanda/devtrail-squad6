@@ -1,11 +1,15 @@
 package devtrail.squad6.locadoraveiculos.service;
 
+import devtrail.squad6.locadoraveiculos.model.entity.Acessorio;
 import devtrail.squad6.locadoraveiculos.model.entity.Carro;
+import devtrail.squad6.locadoraveiculos.model.entity.ModeloCarro;
 import devtrail.squad6.locadoraveiculos.repository.CarroRepository;
 import devtrail.squad6.locadoraveiculos.service.interfaces.CarroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,6 +43,19 @@ public class CarroServiceImpl implements CarroService {
         }
     }
 
+    public List<Carro> listarCarrosDisponiveis(LocalDate dataInicio, LocalDate dataDevolucao) {
+        List<Carro> carrosDisponiveis = new ArrayList<>();
+        List<Carro> todosCarros = carroRepository.findAll();
+
+        for (Carro carro : todosCarros) {
+            if (carro.isDisponivelParaAluguel(dataInicio, dataDevolucao)) {
+                carrosDisponiveis.add(carro);
+            }
+        }
+
+        return carrosDisponiveis;
+    }
+
     @Override
     public List<Carro> findAll() {
         try {
@@ -64,6 +81,14 @@ public class CarroServiceImpl implements CarroService {
         }
     }
 
+    public List<Carro> findByModeloCarro(ModeloCarro modeloCarro){
+        return carroRepository.findByModeloCarro(modeloCarro);
+    }
+
+    public List<Carro> findByAcessorio(Acessorio acessorio) {
+        return carroRepository.findByAcessoriosContaining(acessorio);
+    }
+
 
     private boolean isChassiValido(String chassi) {
         String chassiPadrao = "^[A-HJ-NPR-Z0-9]{17}$";
@@ -80,6 +105,8 @@ public class CarroServiceImpl implements CarroService {
         String placaPadrao = "^[A-Z]{3}\\d[A-Z]{2}\\d{2}$";
         return placa.toUpperCase().matches(placaPadrao);
     }
+
+
 
     public void saveNewDates(Carro carro){
         try{
