@@ -7,7 +7,10 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -50,4 +53,19 @@ public class Carro implements Serializable {
 
     @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Aluguel> alugueis;
+
+    @ElementCollection
+    @CollectionTable(name = "carro_datas_ocupadas", joinColumns = @JoinColumn(name = "carro_id"))
+    @Column(name = "data_ocupada")
+    private List<LocalDate> datasOcupadas = new ArrayList<>();
+
+    public void bloquearDatas(LocalDate dataInicio, LocalDate dataDevolucao) {
+        LocalDate data = dataInicio;
+        while (!data.isAfter(dataDevolucao)) {
+            datasOcupadas.add(data);
+            data = data.plusDays(1);
+        }
+    }
+
+
 }

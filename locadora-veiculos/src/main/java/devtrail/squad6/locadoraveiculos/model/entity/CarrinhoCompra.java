@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -27,5 +28,5 @@ public class CarrinhoCompra implements Serializable {
             joinColumns = @JoinColumn(name = "carrinho_id"),
             inverseJoinColumns =  @JoinColumn(name = "carro_id")
     )
-    private List<Carro> carros;
+    private List<Carro> listaCarros = new ArrayList<>();
 }
