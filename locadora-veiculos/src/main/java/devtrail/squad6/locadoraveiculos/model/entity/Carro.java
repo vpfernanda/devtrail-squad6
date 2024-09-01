@@ -30,7 +30,7 @@ public class Carro implements Serializable {
     @Column(name = "cor", nullable = false, length =100 )
     private String cor;
 
-    @Column(name = "", nullable = false)
+    @Column(name = "valor_diaria", nullable = false)
     private BigDecimal valorDiaria;
 
     @Lob
@@ -48,6 +48,6 @@ public class Carro implements Serializable {
     @JoinColumn(name = "modelo_id", nullable = false)
     private ModeloCarro modelo;
 
-    @OneToMany(mappedBy = "carro")
+    @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
     private Set<Aluguel> alugueis;
 }

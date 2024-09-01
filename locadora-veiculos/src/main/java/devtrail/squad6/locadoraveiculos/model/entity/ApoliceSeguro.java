@@ -2,7 +2,6 @@ package devtrail.squad6.locadoraveiculos.model.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-
 import java.io.Serializable;
 import java.math.BigDecimal;
 

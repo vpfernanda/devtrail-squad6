@@ -2,16 +2,14 @@ package devtrail.squad6.locadoraveiculos.model.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-@Getter
-@Setter
 @Data
+@NoArgsConstructor
 @Entity
 @Table(name = "acessorio")
 public class Acessorio implements Serializable {
@@ -24,7 +22,7 @@ public class Acessorio implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column (nullable = false)
+    @Column (nullable = false, length = 100)
     private String descricao;
 
     @ManyToMany(mappedBy = "acessorios")
