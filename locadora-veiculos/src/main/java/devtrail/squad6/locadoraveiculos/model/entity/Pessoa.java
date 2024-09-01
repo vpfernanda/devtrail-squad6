@@ -1,20 +1,17 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
+import devtrail.squad6.locadoraveiculos.model.entity.enums.Sexo;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-
-
-@Entity
-@Table (name = "pessoa")
-@Inheritance(strategy = InheritanceType.JOINED)
-@Data
+@MappedSuperclass
 @Getter
 @Setter
 @NoArgsConstructor
-public class Pessoa implements Serializable {
+@AllArgsConstructor
+public abstract class Pessoa implements Serializable {
 
     public Pessoa(String nome, LocalDate dataNascimento, String cpf, Sexo sexo) {
         this.nome = nome;

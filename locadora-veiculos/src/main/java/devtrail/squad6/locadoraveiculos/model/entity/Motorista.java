@@ -8,13 +8,13 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
+@DiscriminatorValue("MOTORISTA")
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
-
-public class Motorista extends Pessoa implements Serializable {
+public class Motorista extends User {
     @Column(name = "numeroCNH", unique = true)
     private String numeroCNH;
 
