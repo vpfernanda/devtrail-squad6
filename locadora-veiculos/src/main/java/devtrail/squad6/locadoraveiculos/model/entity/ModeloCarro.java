@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.List;
 
 @Entity
 @Data
@@ -18,6 +19,9 @@ public class ModeloCarro implements Serializable {
 
     @Column(name = "descricao", length = 100, nullable = false)
     private String descricao;
+
+    @OneToMany
+    private List<Carro> carro;
 
     @Enumerated(EnumType.STRING)
     private Categoria categoria;

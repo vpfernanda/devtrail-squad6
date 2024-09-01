@@ -105,20 +105,20 @@ public class MotoristaServiceImpl implements MotoristaService {
     }
 
     private boolean existCPF(String cpf) {
-        return motoristaRepository.findMotoristaByCpf(cpf) != null;
+        return motoristaRepository.findByCpf(cpf) != null;
     }
 
     private boolean existCNH(String numeroCNH) {
-        return motoristaRepository.findMotoristasByNumeroCNH(numeroCNH) != null;
+        return motoristaRepository.findByNumeroCNH(numeroCNH) != null;
     }
 
     private boolean existEmail(String email) {
-        return motoristaRepository.findMotoristaByEmail(email) != null;
+        return motoristaRepository.findByEmail(email) != null;
     }
 
     @Override
     public Motorista findByEmail(String email) {
-        return motoristaRepository.findMotoristaByEmail(email);
+        return motoristaRepository.findByEmail(email);
     }
 
     @Override

@@ -1,6 +1,6 @@
 package devtrail.squad6.locadoraveiculos.repository;
 
-import devtrail.squad6.locadoraveiculos.model.entity.Categoria;
+import devtrail.squad6.locadoraveiculos.model.entity.enums.Categoria;
 import devtrail.squad6.locadoraveiculos.model.entity.ModeloCarro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
