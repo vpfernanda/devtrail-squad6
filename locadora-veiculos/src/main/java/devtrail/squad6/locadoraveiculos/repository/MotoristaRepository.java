@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MotoristaRepository extends JpaRepository<Motorista, Long> {
+    Motorista findByEmail(String email);
+    Motorista findByCpf(String cpf);
+    Motorista findByNumeroCNH(String numeroCNH);
 }
