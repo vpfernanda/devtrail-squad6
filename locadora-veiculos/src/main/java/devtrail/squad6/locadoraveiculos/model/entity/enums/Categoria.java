@@ -1,4 +1,4 @@
-package devtrail.squad6.locadoraveiculos.model.entity;
+package devtrail.squad6.locadoraveiculos.model.entity.enums;
 
 public enum Categoria {
     HATCH_COMPACTO,

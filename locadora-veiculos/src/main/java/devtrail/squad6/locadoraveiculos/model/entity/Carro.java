@@ -20,14 +20,21 @@ public class Carro implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @Column(name = "placa", nullable = false, length = 7, unique = true)
     private String placa;
+
     @Column(name = "chassi", nullable = false, length = 17, unique = true )
     private String chassi;
+
     @Column(name = "cor", nullable = false, length =100 )
     private String cor;
+
     @Column(name = "valor_diaria", nullable = false)
     private BigDecimal valorDiaria;
+
+    @Lob
+    private byte[] imagem;
 
     @ManyToMany
     @JoinTable(
