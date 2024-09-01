@@ -1,5 +1,6 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
+import devtrail.squad6.locadoraveiculos.model.entity.enums.Categoria;
 import jakarta.persistence.*;
 import lombok.*;
 
