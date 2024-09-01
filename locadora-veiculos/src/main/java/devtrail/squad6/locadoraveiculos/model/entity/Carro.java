@@ -59,5 +59,13 @@ public class Carro implements Serializable {
     @Column(name = "data_ocupada")
     private List<LocalDate> datasOcupadas = new ArrayList<>();
 
+    public void bloquearDatas(LocalDate dataInicio, LocalDate dataDevolucao) {
+        LocalDate data = dataInicio;
+        while (!data.isAfter(dataDevolucao)) {
+            datasOcupadas.add(data);
+            data = data.plusDays(1);
+        }
+    }
+
 
 }

@@ -81,4 +81,12 @@ public class CarroServiceImpl implements CarroService {
         return placa.toUpperCase().matches(placaPadrao);
     }
 
+    public void saveNewDates(Carro carro){
+        try{
+            carroRepository.save(carro);
+        } catch (Exception e) {
+            throw new RuntimeException(e.getMessage());
+        }
+    }
+
 }
