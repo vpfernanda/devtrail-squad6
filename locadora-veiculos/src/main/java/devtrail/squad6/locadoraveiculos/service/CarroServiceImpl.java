@@ -1,10 +1,20 @@
 package devtrail.squad6.locadoraveiculos.service;
 
+import devtrail.squad6.locadoraveiculos.mapper.CarroDetalheMapper;
+import devtrail.squad6.locadoraveiculos.mapper.CarroMapper;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroDTO;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroDetalheDTO;
+import devtrail.squad6.locadoraveiculos.model.entity.Acessorio;
 import devtrail.squad6.locadoraveiculos.model.entity.Carro;
+import devtrail.squad6.locadoraveiculos.model.entity.Fabricante;
+import devtrail.squad6.locadoraveiculos.model.entity.enums.Categoria;
 import devtrail.squad6.locadoraveiculos.repository.CarroRepository;
 import devtrail.squad6.locadoraveiculos.service.interfaces.CarroService;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cglib.core.Local;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -15,7 +25,11 @@ public class CarroServiceImpl implements CarroService {
     @Autowired
     private CarroRepository carroRepository;
 
+    private CarroMapper mapper;
 
+    private CarroDetalheMapper detalheMapper;
+
+    @Transactional
     @Override
     public Carro save(Carro carro) {
         try {
@@ -30,6 +44,7 @@ public class CarroServiceImpl implements CarroService {
             if (carroRepository.existsByPlaca(carro.getPlaca())) {
                 throw new IllegalArgumentException("Placa do carro já existente no sistema!");
             }
+
             if (carroRepository.existsByChassi(carro.getChassi())) {
                 throw new IllegalArgumentException("Número de chassi já existente no sistema!");
             }
@@ -39,22 +54,21 @@ public class CarroServiceImpl implements CarroService {
         }
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public List<Carro> findAll() {
-        try {
-            return carroRepository.findAll();
-        }catch (Exception e){
-            System.out.println("Não foi possível encontrar registros de carros!");
-        }
-        return null;
+    public List<CarroDTO> findAll() {
+        List<Carro> response = carroRepository.findAll();
+        return response.stream().map(this.mapper::modelToDTO).toList();
     }
 
+    @Transactional(readOnly = true)
     @Override
-    public Carro findById(Long id) {
+    public CarroDetalheDTO findById(Long id) {
         Optional<Carro> carroOptional = carroRepository.findById(id);
-        return carroOptional.orElseThrow(() -> new RuntimeException("Carro não encontrado com o ID: " + id));
+        return this.detalheMapper.modelToDTO(carroOptional.orElseThrow(() -> new RuntimeException("Carro não encontrado com o ID: " + id)));
     }
 
+    @Transactional
     @Override
     public void deleteById(Long id) {
         if (carroRepository.existsById(id)) {
@@ -63,7 +77,6 @@ public class CarroServiceImpl implements CarroService {
             throw new RuntimeException("Carro não encontrado com o ID: " + id);
         }
     }
-
 
     private boolean isChassiValido(String chassi) {
         String chassiPadrao = "^[A-HJ-NPR-Z0-9]{17}$";
@@ -81,6 +94,7 @@ public class CarroServiceImpl implements CarroService {
         return placa.toUpperCase().matches(placaPadrao);
     }
 
+    @Transactional
     public void saveNewDates(Carro carro){
         try{
             carroRepository.save(carro);
@@ -89,4 +103,21 @@ public class CarroServiceImpl implements CarroService {
         }
     }
 
+    @Transactional(readOnly = true)
+    public List<CarroDTO> findByCategoriaAndAcessorios(Categoria categoria, @NotNull List<Acessorio> acessorios){
+        List<Carro> response = carroRepository.findByModelo_CategoriaAndAcessoriosIn(categoria,acessorios);
+        return response.stream().map(this.mapper::modelToDTO).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CarroDTO> findByCategoria(Categoria categoria){
+        List<Carro> response = carroRepository.findByModelo_Categoria(categoria);
+        return response.stream().map(this.mapper::modelToDTO).toList();
+    }
+
+    @Transactional(readOnly = true)
+    public List<CarroDTO> findByAcessorios(@NotNull List<Acessorio> acessorios){
+            List<Carro> response = carroRepository.findByAcessoriosIn(acessorios);
+            return response.stream().map(this.mapper::modelToDTO).toList();
+    }
 }

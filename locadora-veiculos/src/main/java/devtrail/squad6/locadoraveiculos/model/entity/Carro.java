@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -52,7 +53,7 @@ public class Carro implements Serializable {
     private ModeloCarro modelo;
 
     @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Aluguel> alugueis;
+    private List<Aluguel> alugueis;
 
     @ElementCollection
     @CollectionTable(name = "carro_datas_ocupadas", joinColumns = @JoinColumn(name = "carro_id"))
@@ -65,6 +66,22 @@ public class Carro implements Serializable {
             datasOcupadas.add(data);
             data = data.plusDays(1);
         }
+    }
+
+    public boolean estaDisponivel(@NotNull LocalDate dataPedido, @NotNull LocalDate dataEntrega){
+
+        if (dataPedido.isAfter(dataEntrega)){
+            throw new IllegalArgumentException("dataPedido é maior que dataEntrega");
+        }
+
+        LocalDate data = dataPedido;
+        while (!data.isAfter(dataEntrega)) {
+            if (datasOcupadas.contains(data)){
+                return false;
+            }
+            data = data.plusDays(1);
+        }
+        return true;
     }
 
 
