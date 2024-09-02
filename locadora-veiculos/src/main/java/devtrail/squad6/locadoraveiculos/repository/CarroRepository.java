@@ -15,7 +15,7 @@ public interface CarroRepository extends JpaRepository<Carro, Long> {
 
     boolean existsByChassi(String chassi);
 
-    List<Carro> findByModeloCarro(ModeloCarro modelo);
+    List<Carro> findByModelo(ModeloCarro modelo);
 
     List<Carro> findByAcessoriosContaining(Acessorio acessorio);
 }
