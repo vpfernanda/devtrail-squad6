@@ -61,8 +61,8 @@ public class CarrinhoCompraServiceImpl implements CarrinhoCompraService {
         return carrinho.getListaAlugueis();
     }
 
-    public void addAluguelByMotoristaId(Long motoristaId, AluguelDTO aluguelDTO) {
-        Motorista motorista = motoristaRepository.findById(motoristaId)
+    public void addAluguelByMotoristaId(AluguelDTO aluguelDTO) {
+        Motorista motorista = motoristaRepository.findById(aluguelDTO.MotoristaId())
                 .orElseThrow(() -> new EntityNotFoundException("Motorista não encontrado"));
         CarrinhoCompra carrinho = findByMotorista(motorista);
         adicionarAluguel(carrinho, aluguelDTO);
