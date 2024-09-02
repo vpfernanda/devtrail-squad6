@@ -27,7 +27,7 @@ public class CarrinhoCompraController {
 
     @PostMapping("/adicionar")
     @ResponseStatus(HttpStatus.CREATED)
-    public void adicionarAoCarrinho(@RequestParam Long motoristaId, @Valid @RequestBody AluguelDTO aluguelDTO) {
+    public void adicionarAoCarrinho(@Valid @RequestBody AluguelDTO aluguelDTO) {
         carrinhoCompraService.addAluguelByMotoristaId(aluguelDTO);
     }
 
