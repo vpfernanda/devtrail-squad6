@@ -48,7 +48,7 @@ public class CarroServiceImpl implements CarroService {
         List<Carro> todosCarros = carroRepository.findAll();
 
         for (Carro carro : todosCarros) {
-            if (carro.isDisponivelParaAluguel(dataInicio, dataDevolucao)) {
+            if (carro.isDisponivelParaAlugar(dataInicio, dataDevolucao)) {
                 carrosDisponiveis.add(carro);
             }
         }
@@ -82,7 +82,7 @@ public class CarroServiceImpl implements CarroService {
     }
 
     public List<Carro> findByModeloCarro(ModeloCarro modeloCarro){
-        return carroRepository.findByModeloCarro(modeloCarro);
+        return carroRepository.findByModelo(modeloCarro);
     }
 
     public List<Carro> findByAcessorio(Acessorio acessorio) {
