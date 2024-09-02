@@ -62,8 +62,7 @@ public class AluguelServiceImpl implements AluguelService {
     }
 
     public boolean processPayment(String cardNumber, String expirationDate, String cvv) {
-        boolean paymentSuccessful = verifyPayment(cardNumber, expirationDate, cvv);
-        return paymentSuccessful;
+        return verifyPayment(cardNumber, expirationDate, cvv);
     }
 
     public boolean verifyPayment(String cardNumber, String expirationDate, String cvv){

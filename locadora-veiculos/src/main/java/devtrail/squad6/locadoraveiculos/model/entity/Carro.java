@@ -67,5 +67,15 @@ public class Carro implements Serializable {
         }
     }
 
+    public boolean isDisponivelParaAluguel(LocalDate dataInicio, LocalDate dataDevolucao) {
+        for (LocalDate data : datasOcupadas) {
+            if (!data.isBefore(dataInicio) && !data.isAfter(dataDevolucao)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
 
 }
