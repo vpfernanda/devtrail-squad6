@@ -68,7 +68,7 @@ public class CarroServiceImpl implements CarroService {
         List<Carro> todosCarros = carroRepository.findAll();
 
         for (Carro carro : todosCarros) {
-            if (carro.isDisponivelParaAlugar(dataInicio, dataDevolucao)) {
+            if (carro.estaDisponivel(dataInicio, dataDevolucao)) {
                 carrosDisponiveis.add(carro);
             }
         }

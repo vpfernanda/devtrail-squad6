@@ -1,6 +1,11 @@
 package devtrail.squad6.locadoraveiculos.service;
 
+import devtrail.squad6.locadoraveiculos.mapper.CarroDetalheMapper;
+import devtrail.squad6.locadoraveiculos.mapper.CarroFormMapper;
 import devtrail.squad6.locadoraveiculos.model.dto.AluguelDTO;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroDTO;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroDetalheDTO;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroForm;
 import devtrail.squad6.locadoraveiculos.model.entity.Aluguel;
 import devtrail.squad6.locadoraveiculos.model.entity.Carro;
 import devtrail.squad6.locadoraveiculos.model.entity.Motorista;
@@ -25,11 +30,14 @@ public class AluguelServiceImpl implements AluguelService {
     @Autowired
     private CarroServiceImpl carroService;
 
+    private CarroDetalheMapper detalheMapper;
+    private CarroFormMapper formMapper;
+
     @Override
     public Aluguel save(Aluguel aluguel) {
         try {
             Carro carro = aluguel.getCarro();
-            if(carro.isDisponivelParaAlugar(aluguel.getDataPedido(), aluguel.getDataDevolucao())){
+            if(carro.estaDisponivel(aluguel.getDataPedido(), aluguel.getDataDevolucao())){
                 carro.bloquearDatas(aluguel.getDataEntrega(), aluguel.getDataDevolucao());
                 carroService.saveNewDates(carro);
             }
@@ -95,7 +103,8 @@ public class AluguelServiceImpl implements AluguelService {
     }
 
     public Aluguel confirmarAluguel(AluguelDTO aluguelDTO) {
-        Carro carro = carroService.findById(aluguelDTO.carroId());
+        CarroDetalheDTO carroDetalheDTO = carroService.findById(aluguelDTO.carroId());
+        Carro carro = this.detalheMapper.dtoToModel(carroDetalheDTO);
 
         Motorista motorista = motoristaRepository.findById(aluguelDTO.MotoristaId())
                 .orElseThrow(() -> new EntityNotFoundException("Motorista não encontrado")).getMotorista();
@@ -112,7 +121,8 @@ public class AluguelServiceImpl implements AluguelService {
         aluguel.setValorTotal(valorTotal);
 
         carro.bloquearDatas(aluguelDTO.dataPedido(), aluguelDTO.dataEntrega());
-        carroService.save(carro); // Atualiza o carro com as datas bloqueadas
+        CarroForm salvo = this.formMapper.modelToDTO(carro);
+        carroService.save(salvo); // Atualiza o carro com as datas bloqueadas
 
         return aluguelRepository.save(aluguel);
     }

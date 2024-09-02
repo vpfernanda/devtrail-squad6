@@ -1,6 +1,8 @@
 package devtrail.squad6.locadoraveiculos.service;
 
+import devtrail.squad6.locadoraveiculos.mapper.CarroDetalheMapper;
 import devtrail.squad6.locadoraveiculos.model.dto.AluguelDTO;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroDetalheDTO;
 import devtrail.squad6.locadoraveiculos.model.dto.ResumoCarrinhoDTO;
 import devtrail.squad6.locadoraveiculos.model.entity.Carro;
 import devtrail.squad6.locadoraveiculos.model.entity.CarrinhoCompra;
@@ -30,6 +32,8 @@ public class CarrinhoCompraServiceImpl implements CarrinhoCompraService {
 
     @Autowired
     private MotoristaRepository motoristaRepository;
+
+    CarroDetalheMapper detalheMapper;
 
     @Override
     public List<CarrinhoCompra> findAll() {
@@ -122,7 +126,8 @@ public class CarrinhoCompraServiceImpl implements CarrinhoCompraService {
     private BigDecimal calcularTotalCarrinho(List<AluguelDTO> alugueis) {
         BigDecimal total = BigDecimal.ZERO;
         for (AluguelDTO aluguel : alugueis) {
-            Carro carro = carroService.findById(aluguel.carroId());
+            CarroDetalheDTO carroDetalheDTO = carroService.findById(aluguel.carroId());
+            Carro carro = this.detalheMapper.dtoToModel(carroDetalheDTO);
             long diasAluguel = ChronoUnit.DAYS.between(aluguel.dataPedido(), aluguel.dataEntrega()) + 1;
             BigDecimal valorAluguel = carro.getValorDiaria().multiply(BigDecimal.valueOf(diasAluguel));
             total = total.add(valorAluguel);
