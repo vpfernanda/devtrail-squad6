@@ -17,7 +17,7 @@ public class MotoristaServiceImpl implements MotoristaService {
     public List<Motorista> findAll() {
         try {
             return motoristaRepository.findAll();
-        }catch (Exception e) {
+        } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
     }
@@ -25,7 +25,7 @@ public class MotoristaServiceImpl implements MotoristaService {
     @Override
     public Motorista save(Motorista motorista) {
         try {
-            if (!isCPF(motorista.getCpf())){
+            if (!isCPF(motorista.getCpf())) {
                 throw new IllegalArgumentException("CPF inválido");
             }
 
@@ -36,10 +36,10 @@ public class MotoristaServiceImpl implements MotoristaService {
             if (existCPF(motorista.getCpf())) {
                 throw new IllegalArgumentException("CPF já existente no sistema!");
             }
-            if (existCNH(motorista.getCpf())) {
+            if (existCNH(motorista.getNumeroCNH())) {
                 throw new IllegalArgumentException("CNH já existente no sistema!");
             }
-            if (existEmail(motorista.getCpf())) {
+            if (existEmail(motorista.getEmail())) {
                 throw new IllegalArgumentException("Email já existente no sistema!");
             }
 
@@ -53,7 +53,8 @@ public class MotoristaServiceImpl implements MotoristaService {
 
     private boolean isCPF(String CPF) {
         try {
-            String cpf = CPF.replace(".", "").replace("-", "");
+            String cpf = CPF.replaceAll("[^0-9]", "");
+
             if (cpf.length() != 11) {
                 return false;
             }
@@ -61,7 +62,6 @@ public class MotoristaServiceImpl implements MotoristaService {
             int[] multiplicadores1 = {10, 9, 8, 7, 6, 5, 4, 3, 2};
             int[] multiplicadores2 = {11, 10, 9, 8, 7, 6, 5, 4, 3, 2};
 
-            // Calcula o primeiro dígito verificador
             int soma = 0;
             for (int i = 0; i < 9; i++) {
                 soma += Integer.parseInt(cpf.substring(i, i + 1)) * multiplicadores1[i];
@@ -69,7 +69,6 @@ public class MotoristaServiceImpl implements MotoristaService {
             int resto = soma % 11;
             int digito1 = resto < 2 ? 0 : 11 - resto;
 
-            // Calcula o segundo dígito verificador
             soma = 0;
             for (int i = 0; i < 10; i++) {
                 soma += Integer.parseInt(cpf.substring(i, i + 1)) * multiplicadores2[i];
@@ -77,7 +76,6 @@ public class MotoristaServiceImpl implements MotoristaService {
             resto = soma % 11;
             int digito2 = resto < 2 ? 0 : 11 - resto;
 
-            // Compara os dígitos calculados com os dígitos reais
             return digito1 == Integer.parseInt(cpf.substring(9, 10)) && digito2 == Integer.parseInt(cpf.substring(10));
         } catch (NumberFormatException e) {
             return false;
@@ -102,29 +100,29 @@ public class MotoristaServiceImpl implements MotoristaService {
     public static String formatCPF(String CPF) {
         String cpf = CPF.replaceAll("[^0-9]", "");
 
-        return(cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." +
+        return (cpf.substring(0, 3) + "." + cpf.substring(3, 6) + "." +
                 cpf.substring(6, 9) + "-" + cpf.substring(9, 11));
     }
 
-    private boolean existCPF(String cpf){
+    private boolean existCPF(String cpf) {
         return motoristaRepository.findByCpf(cpf) != null;
     }
 
-    private boolean existCNH(String numeroCNH){
-        return motoristaRepository.findBynumeroCNH(numeroCNH) != null;
+    private boolean existCNH(String numeroCNH) {
+        return motoristaRepository.findByNumeroCNH(numeroCNH) != null;
     }
 
-    private boolean existEmail(String email){
-        return (motoristaRepository.findByEmail(email) != null);
+    private boolean existEmail(String email) {
+        return motoristaRepository.findByEmail(email) != null;
     }
 
     @Override
-    public Motorista findByEmail(String email){
+    public Motorista findByEmail(String email) {
         return motoristaRepository.findByEmail(email);
     }
 
     @Override
-    public void deleteById(Long motoristaId){
+    public void deleteById(Long motoristaId) {
         try {
             motoristaRepository.deleteById(motoristaId);
         } catch (Exception e) {
