@@ -23,13 +23,24 @@ public class AluguelServiceImpl implements AluguelService {
     public Aluguel save(Aluguel aluguel) {
         try {
             Carro carro = aluguel.getCarro();
-            carro.bloquearDatas(aluguel.getDataEntrega(), aluguel.getDataDevolucao());
-
-            carroService.saveNewDates(carro);
-            return aluguelRepository.save(aluguel);
+            if(carroEstaDisponivel(carro, aluguel.getDataPedido(), aluguel.getDataDevolucao())){
+                carro.bloquearDatas(aluguel.getDataEntrega(), aluguel.getDataDevolucao());
+                carroService.saveNewDates(carro);
+                return aluguelRepository.save(aluguel);
+            }
         } catch (Exception e) {
             throw new RuntimeException(e.getMessage());
         }
+    }
+
+    public boolean carroEstaDisponivel (Carro carro, LocalDate dataInicio, LocalDate dataFim) {
+        LocalDate dataAluguel = dataInicio;
+            while (!dataAluguel.isAfter(dataFim)) {
+                if(carro.getDatasOcupadas().contains(dataAluguel))
+                    return false;
+                dataAluguel = dataAluguel.plusDays(1);
+        }
+            return true;
     }
 
     @Override
