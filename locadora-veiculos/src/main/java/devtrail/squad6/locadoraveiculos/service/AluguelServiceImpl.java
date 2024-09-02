@@ -33,16 +33,6 @@ public class AluguelServiceImpl implements AluguelService {
         }
     }
 
-    public boolean carroEstaDisponivel (Carro carro, LocalDate dataInicio, LocalDate dataFim) {
-        LocalDate dataAluguel = dataInicio;
-            while (!dataAluguel.isAfter(dataFim)) {
-                if(carro.getDatasOcupadas().contains(dataAluguel))
-                    return false;
-                dataAluguel = dataAluguel.plusDays(1);
-        }
-            return true;
-    }
-
     @Override
     public List<Aluguel> findAll() {
         try {
