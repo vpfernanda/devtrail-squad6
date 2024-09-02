@@ -1,18 +1,22 @@
 package devtrail.squad6.locadoraveiculos.service;
 
 import devtrail.squad6.locadoraveiculos.mapper.CarroDetalheMapper;
+import devtrail.squad6.locadoraveiculos.mapper.CarroFormMapper;
 import devtrail.squad6.locadoraveiculos.mapper.CarroMapper;
 import devtrail.squad6.locadoraveiculos.model.dto.CarroDTO;
 import devtrail.squad6.locadoraveiculos.model.dto.CarroDetalheDTO;
+import devtrail.squad6.locadoraveiculos.model.dto.CarroForm;
+import devtrail.squad6.locadoraveiculos.model.dto.FiltroCarroDTO;
 import devtrail.squad6.locadoraveiculos.model.entity.Acessorio;
 import devtrail.squad6.locadoraveiculos.model.entity.Carro;
-import devtrail.squad6.locadoraveiculos.model.entity.Fabricante;
 import devtrail.squad6.locadoraveiculos.model.entity.enums.Categoria;
 import devtrail.squad6.locadoraveiculos.repository.CarroRepository;
 import devtrail.squad6.locadoraveiculos.service.interfaces.CarroService;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,29 +30,32 @@ public class CarroServiceImpl implements CarroService {
     private CarroRepository carroRepository;
 
     private CarroMapper mapper;
-
     private CarroDetalheMapper detalheMapper;
+    private CarroFormMapper FormMapper;
 
     @Transactional
     @Override
-    public Carro save(Carro carro) {
+    public CarroDetalheDTO save(CarroForm carroForm) {
         try {
-            if (!isPlacaMercosulValida(carro.getPlaca()) && !isPlacaComumValida(carro.getPlaca())) {
-                throw new IllegalArgumentException("Placa do carro inválida!");
+            if (!isPlacaMercosulValida(carroForm.getPlaca()) && !isPlacaComumValida(carroForm.getPlaca())) {
+                throw new IllegalArgumentException("Placa do carroForm inválida!");
             }
 
-            if (!isChassiValido(carro.getChassi())) {
-                throw new IllegalArgumentException("Chassi do carro inválido!");
+            if (!isChassiValido(carroForm.getChassi())) {
+                throw new IllegalArgumentException("Chassi do carroForm inválido!");
             }
 
-            if (carroRepository.existsByPlaca(carro.getPlaca())) {
-                throw new IllegalArgumentException("Placa do carro já existente no sistema!");
+            if (carroRepository.existsByPlaca(carroForm.getPlaca())) {
+                throw new IllegalArgumentException("Placa do carroForm já existente no sistema!");
             }
 
-            if (carroRepository.existsByChassi(carro.getChassi())) {
+            if (carroRepository.existsByChassi(carroForm.getChassi())) {
                 throw new IllegalArgumentException("Número de chassi já existente no sistema!");
             }
-            return carroRepository.save(carro);
+
+            Carro salvo = carroRepository.save(this.FormMapper.dtoToModel(carroForm));
+            return this.detalheMapper.modelToDTO(salvo);
+
         } catch (Exception e) {
             throw new RuntimeException( e.getMessage());
         }
@@ -56,9 +63,9 @@ public class CarroServiceImpl implements CarroService {
 
     @Transactional(readOnly = true)
     @Override
-    public List<CarroDTO> findAll() {
-        List<Carro> response = carroRepository.findAll();
-        return response.stream().map(this.mapper::modelToDTO).toList();
+    public Page<CarroDTO> findAll(Pageable pageable) {
+        Page<Carro> response = carroRepository.findAll(pageable);
+        return response.map(this.mapper::modelToDTO);
     }
 
     @Transactional(readOnly = true)
@@ -104,20 +111,41 @@ public class CarroServiceImpl implements CarroService {
     }
 
     @Transactional(readOnly = true)
-    public List<CarroDTO> findByCategoriaAndAcessorios(Categoria categoria, @NotNull List<Acessorio> acessorios){
-        List<Carro> response = carroRepository.findByModelo_CategoriaAndAcessoriosIn(categoria,acessorios);
-        return response.stream().map(this.mapper::modelToDTO).toList();
+    public Page<CarroDTO> findByFilter(FiltroCarroDTO filtroCarroDTO, Pageable pageable){
+        Categoria categoria = filtroCarroDTO.getCategoria();
+        List<Acessorio> acessorios = filtroCarroDTO.getAcessorios();
+
+        if (categoria != null && (acessorios.isEmpty() || acessorios.contains(null))) {
+            return findByCategoria(categoria, pageable);
+        }
+
+        if (categoria == null && !acessorios.isEmpty() && !acessorios.contains(null)) {
+            return findByAcessorios(acessorios, pageable);
+        }
+
+        if (categoria != null && !acessorios.isEmpty() && !acessorios.contains(null)) {
+            return findByCategoriaAndAcessorios(categoria, acessorios, pageable);
+        }
+
+        return findAll(pageable);
+
     }
 
     @Transactional(readOnly = true)
-    public List<CarroDTO> findByCategoria(Categoria categoria){
-        List<Carro> response = carroRepository.findByModelo_Categoria(categoria);
-        return response.stream().map(this.mapper::modelToDTO).toList();
+    protected Page<CarroDTO> findByCategoriaAndAcessorios(Categoria categoria, @NotNull List<Acessorio> acessorios, Pageable pageable){
+        Page<Carro> response = carroRepository.findByModelo_CategoriaAndAcessoriosIn(categoria,acessorios, pageable);
+        return response.map(this.mapper::modelToDTO);
     }
 
     @Transactional(readOnly = true)
-    public List<CarroDTO> findByAcessorios(@NotNull List<Acessorio> acessorios){
-            List<Carro> response = carroRepository.findByAcessoriosIn(acessorios);
-            return response.stream().map(this.mapper::modelToDTO).toList();
+    protected Page<CarroDTO> findByCategoria(Categoria categoria, Pageable pageable){
+        Page<Carro> response = carroRepository.findByModelo_Categoria(categoria, pageable);
+        return response.map(this.mapper::modelToDTO);
+    }
+
+    @Transactional(readOnly = true)
+    protected Page<CarroDTO> findByAcessorios(@NotNull List<Acessorio> acessorios, Pageable pageable){
+            Page<Carro> response = carroRepository.findByAcessoriosIn(acessorios, pageable);
+            return response.map(this.mapper::modelToDTO);
     }
 }

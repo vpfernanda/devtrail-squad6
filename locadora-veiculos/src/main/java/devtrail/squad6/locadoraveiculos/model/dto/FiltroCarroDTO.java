@@ -2,6 +2,7 @@ package devtrail.squad6.locadoraveiculos.model.dto;
 
 import devtrail.squad6.locadoraveiculos.model.entity.Acessorio;
 import devtrail.squad6.locadoraveiculos.model.entity.enums.Categoria;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -14,6 +15,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FiltroCarroDTO {
+    @NotNull(message = "categoria não pode ser nula")
     Categoria categoria;
-    List<Acessorio> acessorios;
+    @NotNull(message = "lista de acessorios não pode ser vazia")
+    List<@NotNull(message = "o acessorio não pode ser nulo") Acessorio> acessorios;
 }

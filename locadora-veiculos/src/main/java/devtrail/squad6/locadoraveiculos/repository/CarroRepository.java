@@ -5,11 +5,14 @@ import devtrail.squad6.locadoraveiculos.model.entity.Carro;
 import devtrail.squad6.locadoraveiculos.model.entity.Fabricante;
 import devtrail.squad6.locadoraveiculos.model.entity.ModeloCarro;
 import devtrail.squad6.locadoraveiculos.model.entity.enums.Categoria;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+
 import java.util.List;
-import java.util.Set;
+
 
 @Repository
 public interface CarroRepository extends JpaRepository<Carro, Long> {
@@ -18,15 +21,17 @@ public interface CarroRepository extends JpaRepository<Carro, Long> {
 
     boolean existsByChassi(String chassi);
 
-    List<Carro> findByModelo(ModeloCarro modelo);
+    Page<Carro> findAll(Pageable pageable);
 
-    List<Carro> findByModelo_Categoria(Categoria categoria);
+    Page<Carro> findByModelo(ModeloCarro modelo, Pageable pageable);
 
-    List<Carro> findByModelo_Fabricante(Fabricante fabricante);
+    Page<Carro> findByModelo_Categoria(Categoria categoria, Pageable pageable);
 
-    List<Carro> findByModelo_CategoriaAndAcessoriosIn(Categoria categoria, List<Acessorio> acessorios);
+    Page<Carro> findByModelo_Fabricante(Fabricante fabricante, Pageable pageable);
 
-    List<Carro> findByAcessoriosIn(List<Acessorio> acessorios);
+    Page<Carro> findByModelo_CategoriaAndAcessoriosIn(Categoria categoria, List<Acessorio> acessorios, Pageable pageable);
 
-    List<Carro> findByAcessoriosContaining(Acessorio acessorio);
+    Page<Carro> findByAcessoriosIn(List<Acessorio> acessorios, Pageable pageable);
+
+    Page<Carro> findByAcessoriosContaining(Acessorio acessorio, Pageable pageable);
 }
