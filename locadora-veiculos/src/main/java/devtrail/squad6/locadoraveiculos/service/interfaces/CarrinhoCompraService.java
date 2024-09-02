@@ -9,5 +9,5 @@ public interface CarrinhoCompraService {
     CarrinhoCompra save(CarrinhoCompra carrinhoCompra);
     List<CarrinhoCompra> findAll();
     CarrinhoCompra findById(Long id);
-    void removeCarro(CarrinhoCompra carrinhoCompra, Carro carro);
+    void removeAluguel(CarrinhoCompra carrinhoCompra, Long carroId);
 }

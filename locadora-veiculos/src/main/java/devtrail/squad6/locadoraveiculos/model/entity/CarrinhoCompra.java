@@ -1,5 +1,6 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
+import devtrail.squad6.locadoraveiculos.model.dto.AluguelDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -22,11 +23,7 @@ public class CarrinhoCompra implements Serializable {
     @JoinColumn(name="motorista_id")
     private Motorista motorista;
 
-    @ManyToMany
-    @JoinTable(
-            name = "carrinho_compra_carro",
-            joinColumns = @JoinColumn(name = "carrinho_id"),
-            inverseJoinColumns =  @JoinColumn(name = "carro_id")
-    )
-    private List<Carro> listaCarros = new ArrayList<>();
+    @ElementCollection
+    @CollectionTable(name = "carrinho_compra_aluguel", joinColumns = @JoinColumn(name = "carrinho_id"))
+    private List<AluguelDTO> listaAlugueis = new ArrayList<>();
 }
