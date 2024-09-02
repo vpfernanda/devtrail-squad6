@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
@@ -15,7 +16,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarroForm {
+public class CarroForm implements Serializable {
 
     private String placa;
 
@@ -25,7 +26,7 @@ public class CarroForm {
 
     private BigDecimal valorDiaria;
 
-    private byte[] imagem;
+    private String imagem;
 
     private List<Acessorio> acessorios;
 

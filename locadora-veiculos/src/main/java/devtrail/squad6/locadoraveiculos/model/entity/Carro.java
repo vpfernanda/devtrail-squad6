@@ -38,7 +38,7 @@ public class Carro implements Serializable {
     private BigDecimal valorDiaria;
 
     @Lob
-    private byte[] imagem;
+    private String imagem;
 
     @ManyToMany
     @JoinTable(

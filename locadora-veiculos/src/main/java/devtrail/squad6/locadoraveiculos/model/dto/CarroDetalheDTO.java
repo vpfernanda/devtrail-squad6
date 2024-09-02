@@ -9,6 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarroDetalheDTO {
+public class CarroDetalheDTO implements Serializable {
 
     private Long id;
 
@@ -32,7 +33,7 @@ public class CarroDetalheDTO {
 
     private BigDecimal valorDiaria;
 
-    private byte[] imagem;
+    private String imagem;
 
     private List<Acessorio> acessorios;
 

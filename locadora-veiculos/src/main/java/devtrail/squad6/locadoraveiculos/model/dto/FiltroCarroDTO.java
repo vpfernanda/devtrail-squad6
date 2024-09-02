@@ -8,13 +8,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class FiltroCarroDTO {
+public class FiltroCarroDTO implements Serializable {
     @NotNull(message = "categoria não pode ser nula")
     Categoria categoria;
     @NotNull(message = "lista de acessorios não pode ser vazia")

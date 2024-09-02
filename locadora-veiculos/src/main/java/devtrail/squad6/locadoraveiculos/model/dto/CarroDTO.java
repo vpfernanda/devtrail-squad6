@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Set;
 
@@ -14,7 +15,7 @@ import java.util.Set;
 @NoArgsConstructor
 @Getter
 @Setter
-public class CarroDTO {
+public class CarroDTO implements Serializable {
 
     private Long id;
 
@@ -22,6 +23,6 @@ public class CarroDTO {
 
     private List<Acessorio> acessorios;
 
-    private byte[] imagem;
+    private String imagem;
 
 }

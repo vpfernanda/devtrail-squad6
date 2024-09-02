@@ -1,6 +1,8 @@
 package devtrail.squad6.locadoraveiculos.model.dto;
 
-public class SignupDTO {
+import java.io.Serializable;
+
+public class SignupDTO implements Serializable {
 
     //@TODO - Form registro: (Motorista | Funcionario) + User + Pessoa
 
