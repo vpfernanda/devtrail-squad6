@@ -1,0 +1,419 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /carros:
+    get:
+      tags:
+      - carro-controller
+      operationId: listAll
+      parameters:
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageCarroDTO"
+    post:
+      tags:
+      - carro-controller
+      operationId: save
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CarroForm"
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CarroDetalheDTO"
+  /carros/{id}:
+    get:
+      tags:
+      - carro-controller
+      operationId: findById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/CarroDetalheDTO"
+    delete:
+      tags:
+      - carro-controller
+      operationId: delete
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int64
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: object
+  /carros/filter:
+    get:
+      tags:
+      - carro-controller
+      operationId: listByFilter
+      parameters:
+      - name: filtroCarroDTO
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/FiltroCarroDTO"
+      - name: pageable
+        in: query
+        required: true
+        schema:
+          $ref: "#/components/schemas/Pageable"
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: "#/components/schemas/PageCarroDTO"
+components:
+  schemas:
+    Acessorio:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        descricao:
+          type: string
+        carros:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/Carro"
+    Aluguel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        motorista:
+          $ref: "#/components/schemas/Motorista"
+        carro:
+          $ref: "#/components/schemas/Carro"
+        apoliceSeguro:
+          $ref: "#/components/schemas/ApoliceSeguro"
+        dataPedido:
+          type: string
+          format: date
+        dataEntrega:
+          type: string
+          format: date
+        dataDevolucao:
+          type: string
+          format: date
+        valorTotal:
+          type: number
+    ApoliceSeguro:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        valorFranquia:
+          type: number
+        protecaoTerceiro:
+          type: boolean
+        protecaoCausasNaturais:
+          type: boolean
+        protecaoRoubo:
+          type: boolean
+        aluguel:
+          $ref: "#/components/schemas/Aluguel"
+    Carro:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        placa:
+          type: string
+        chassi:
+          type: string
+        cor:
+          type: string
+        valorDiaria:
+          type: number
+        imagem:
+          type: array
+          items:
+            type: string
+            format: byte
+        acessorios:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/Acessorio"
+        modelo:
+          $ref: "#/components/schemas/ModeloCarro"
+        alugueis:
+          type: array
+          items:
+            $ref: "#/components/schemas/Aluguel"
+        datasOcupadas:
+          type: array
+          items:
+            type: string
+            format: date
+    CarroForm:
+      type: object
+      properties:
+        placa:
+          type: string
+        chassi:
+          type: string
+        cor:
+          type: string
+        valorDiaria:
+          type: number
+        imagem:
+          type: array
+          items:
+            type: string
+            format: byte
+        acessorios:
+          type: array
+          items:
+            $ref: "#/components/schemas/Acessorio"
+        modelo:
+          $ref: "#/components/schemas/ModeloCarro"
+    Fabricante:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        modelosCarro:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/ModeloCarro"
+    ModeloCarro:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        descricao:
+          type: string
+        categoria:
+          type: string
+          enum:
+          - HATCH_COMPACTO
+          - HATCH_MEDIO
+          - SEDAN_COMPACTO
+          - SEDAN_MEDIO
+          - SEDAN_GRANDE
+          - MINIVAN
+          - ESPORTIVO
+          - UTILITARIO_COMERCIAL
+        fabricante:
+          $ref: "#/components/schemas/Fabricante"
+    Motorista:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        nome:
+          type: string
+        dataNascimento:
+          type: string
+          format: date
+        cpf:
+          type: string
+        sexo:
+          type: string
+          enum:
+          - MASCULINO
+          - FEMININO
+        email:
+          type: string
+        password:
+          type: string
+        numeroCNH:
+          type: string
+        alugueis:
+          uniqueItems: true
+          type: array
+          items:
+            $ref: "#/components/schemas/Aluguel"
+    CarroDetalheDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        placa:
+          type: string
+        chassi:
+          type: string
+        cor:
+          type: string
+        valorDiaria:
+          type: number
+        imagem:
+          type: array
+          items:
+            type: string
+            format: byte
+        acessorios:
+          type: array
+          items:
+            $ref: "#/components/schemas/Acessorio"
+        modelo:
+          $ref: "#/components/schemas/ModeloCarro"
+        datasOcupadas:
+          type: array
+          items:
+            type: string
+            format: date
+    Pageable:
+      type: object
+      properties:
+        page:
+          minimum: 0
+          type: integer
+          format: int32
+        size:
+          minimum: 1
+          type: integer
+          format: int32
+        sort:
+          type: array
+          items:
+            type: string
+    CarroDTO:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+        modeloCarro:
+          $ref: "#/components/schemas/ModeloCarro"
+        acessorios:
+          type: array
+          items:
+            $ref: "#/components/schemas/Acessorio"
+        imagem:
+          type: array
+          items:
+            type: string
+            format: byte
+    PageCarroDTO:
+      type: object
+      properties:
+        totalElements:
+          type: integer
+          format: int64
+        totalPages:
+          type: integer
+          format: int32
+        first:
+          type: boolean
+        last:
+          type: boolean
+        numberOfElements:
+          type: integer
+          format: int32
+        size:
+          type: integer
+          format: int32
+        content:
+          type: array
+          items:
+            $ref: "#/components/schemas/CarroDTO"
+        number:
+          type: integer
+          format: int32
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        pageable:
+          $ref: "#/components/schemas/PageableObject"
+        empty:
+          type: boolean
+    PageableObject:
+      type: object
+      properties:
+        offset:
+          type: integer
+          format: int64
+        sort:
+          $ref: "#/components/schemas/SortObject"
+        pageSize:
+          type: integer
+          format: int32
+        pageNumber:
+          type: integer
+          format: int32
+        paged:
+          type: boolean
+        unpaged:
+          type: boolean
+    SortObject:
+      type: object
+      properties:
+        empty:
+          type: boolean
+        sorted:
+          type: boolean
+        unsorted:
+          type: boolean
+    FiltroCarroDTO:
+      required:
+      - acessorios
+      - categoria
+      type: object
+      properties:
+        categoria:
+          type: string
+          enum:
+          - HATCH_COMPACTO
+          - HATCH_MEDIO
+          - SEDAN_COMPACTO
+          - SEDAN_MEDIO
+          - SEDAN_GRANDE
+          - MINIVAN
+          - ESPORTIVO
+          - UTILITARIO_COMERCIAL
+        acessorios:
+          type: array
+          items:
+            $ref: "#/components/schemas/Acessorio"

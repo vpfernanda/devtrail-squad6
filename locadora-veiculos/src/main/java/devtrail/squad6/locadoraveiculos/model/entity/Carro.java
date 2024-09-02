@@ -1,10 +1,10 @@
 package devtrail.squad6.locadoraveiculos.model.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -38,7 +38,7 @@ public class Carro implements Serializable {
     private BigDecimal valorDiaria;
 
     @Lob
-    private byte[] imagem;
+    private String imagem;
 
     @ManyToMany
     @JoinTable(
@@ -53,7 +53,7 @@ public class Carro implements Serializable {
     private ModeloCarro modelo;
 
     @OneToMany(mappedBy = "carro", cascade = CascadeType.ALL, orphanRemoval = true)
-    private Set<Aluguel> alugueis;
+    private List<Aluguel> alugueis;
 
     @ElementCollection
     @CollectionTable(name = "carro_datas_ocupadas", joinColumns = @JoinColumn(name = "carro_id"))
@@ -68,20 +68,10 @@ public class Carro implements Serializable {
         }
     }
 
-//    public boolean isDisponivelParaAluguel(LocalDate dataInicio, LocalDate dataDevolucao) {
-//        for (LocalDate data : datasOcupadas) {
-//            if (!data.isBefore(dataInicio) && !data.isAfter(dataDevolucao)) {
-//                return false;
-//            }
-//        }
-//
-//        return true;
-//    }
-
-    public boolean isDisponivelParaAlugar(@NotNull LocalDate dataPedido, @NotNull LocalDate dataEntrega){
+    public boolean estaDisponivel(@NotNull LocalDate dataPedido, @NotNull LocalDate dataEntrega){
 
         if (dataPedido.isAfter(dataEntrega)){
-            throw new IllegalArgumentException("Data do pedido não pode ser após a data de entrega!");
+            throw new IllegalArgumentException("dataPedido é maior que dataEntrega");
         }
 
         LocalDate data = dataPedido;
